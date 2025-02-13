@@ -104,6 +104,30 @@ Tab0:AddToggle({
 		end
 	end    
 })
+
+
+local fgjkil = false
+Tab0:AddToggle({
+	Name = "Spamclick test",
+	Default = false,
+	Callback = function(Value)
+		fgjkil = Value
+		while fgjkil do
+			pcall(function()
+				for i,v in pairs(Player:FindFirstChildOfClass("Backpack"):GetChildren()) do
+					if v:IsA("Tool") or v:IsA("HopperBin") then
+						v.Parent = PlayerCharacter
+					end
+				end
+				PlayerCharacter:FindFirstChildOfClass("Tool"):Activate()
+				PlayerCharacter:FindFirstChildOfClass('Humanoid'):UnequipTools()
+			end)
+			wait(0.0001)
+		end
+	end    
+})
+
+	
 local FinalArg
 spawn(function() -- Release Best Sword Label
 	while wait(0.1) do
