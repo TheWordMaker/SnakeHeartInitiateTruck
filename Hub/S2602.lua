@@ -119,11 +119,11 @@ Tab0:AddToggle({
 						v.Parent = PlayerCharacter
 					end
 				end
-				wait(0.1)
+				repeat wait() until PlayerCharacter:FindFirstChildOfClass("Tool")
 				PlayerCharacter:FindFirstChildOfClass("Tool"):Activate()
-				wait(0.1)
+				wait(0.5)
 				PlayerCharacter:FindFirstChildOfClass('Humanoid'):UnequipTools()
-				wait(0.1)
+				wait(0.5)
 			end)
 			wait(0.0001)
 		end
