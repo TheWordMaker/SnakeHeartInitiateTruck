@@ -846,7 +846,8 @@ RerollPath.ChildRemoved:Connect(function(child)
             print("Here ?2")
             repeat
                 RerollPath.Rerolls.X.Visible = true
-                wait() firesignal(RerollPath.Rerolls.X.MouseButton1Click)
+                wait()
+                firesignal(RerollPath.Rerolls.X.MouseButton1Click)
                 wait()
             until not RerollPath.Rerolls.visible or not Toggles.AutoRoll
             repeat
