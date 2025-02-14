@@ -6,6 +6,6 @@ local GameList = {
 }
 for _,v in pairs(GameList) do
 	if game.PlaceId == v.Id then
-		loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/TheWordMaker/SnakeHeartInitiateTruck/refs/heads/main/Hub/'..v.Name..'.lua'))()
+		loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/TheWordMaker/SnakeHeartInitiateTruck/main/Hub/'..v.Name..'.lua'))()
 	end
 end
