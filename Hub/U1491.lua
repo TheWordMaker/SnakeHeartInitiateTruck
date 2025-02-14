@@ -15,13 +15,6 @@ local RerollPath = PlayerGui.Reroll
 local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
 
 
-local function clickButton()
-    local pos = RerollPath.Rerolls.X.AbsolutePosition + RerollPath.Rerolls.X.AbsoluteSize / 2
-    VirtualInputManager:SendMouseButtonEvent(pos.X, pos.Y, 0, true, RerollPath.Rerolls.X, 0)
-    wait(0.1)
-    VirtualInputManager:SendMouseButtonEvent(pos.X, pos.Y, 0, false, RerollPath.Rerolls.X, 0)
-end
-
 local TableQuests = {
     "Real Amgogus",
     "Gaming Disorder",
@@ -44,7 +37,7 @@ local LookingPower = {
     "MousePositionsThrow",
     "leaderstats"
 	}
-
+--[[
 local Old = getsenv(Player.PlayerScripts.MoveHandler)
 
 hookfunction(Old.camshake, function()
@@ -65,6 +58,7 @@ end)
 hookfunction(Old.addparticle, function()
     return
 end)
+]]--
 
 getgenv().Toggles = {
     AutoRoll = false
