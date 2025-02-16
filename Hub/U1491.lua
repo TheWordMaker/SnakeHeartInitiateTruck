@@ -6,6 +6,7 @@ local Player = Players.LocalPlayer
 local PlayerCharacter = Player.Character
 local PlayerGui = Player.PlayerGui
 local Rep = Get.ReplicatedStorage
+local HttpService = Get.HttpService
 local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 local RerollPath = PlayerGui.Reroll
