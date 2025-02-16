@@ -12,7 +12,7 @@ local HttpService = Get.HttpService
 local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 local RerollPath = PlayerGui.Reroll
-local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
+--local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
 
 
 local TableQuests = {
