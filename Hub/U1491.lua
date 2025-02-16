@@ -1,5 +1,4 @@
 ----------------------[ Universal Utilities ]----------------------
-getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
 local workspace = game.workspace
 local Players = game.Players
 local Rep = game:GetService("ReplicatedStorage")
