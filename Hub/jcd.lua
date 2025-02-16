@@ -22,6 +22,7 @@ local playersToFindMember = {
 	{pseudoMember = "DragonSmelt2", userID = 2908798915},
 	{pseudoMember = "DragonSmelt7", userID = 2908806030},
 	{pseudoMember = "DragonSmelt12", userID = 2908819130},
+	{pseudoMember = "DragonSmelt15", userID = 2908827608},
 	{pseudoMember = "BulletDuglassD", userID = 4654915007},
 	{pseudoMember = "XSam_Xv", userID = 772860717},
 	{pseudoMember = "DaraProxy", userID = 2953008791},
