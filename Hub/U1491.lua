@@ -497,7 +497,7 @@ local SliderLevelItem = TabShop:CreateSlider({
 		ChoosedLevelItem = CurrentValue
    end,
 })
-
+--[[
 local ButtonMassUpgradeRelic = TabShop:CreateButton({
     Name = "Mass Upgrade Relic",
     Callback = function()
@@ -564,6 +564,7 @@ local ButtonMassUpgradeFist = TabShop:CreateButton({
     end,
 })
 
+]]--
 local DividerTabShop = TabShop:CreateDivider()
 
 ----------------------[ Tab AutoFarm ]----------------------
@@ -1023,7 +1024,7 @@ local ToggleNoneTabMisc3 = TabBeta:CreateToggle({
         end
     end,
 })
-
+--[[
 local ButtonTrackPower = TabBeta:CreateButton({
     Name = "Track Power",
     Callback = function()
@@ -1150,3 +1151,4 @@ local ButtonBuyAndUpgrade = TabBeta:CreateButton({
         BuyToUpgradeItem(ChoosedLevelItem2,AmountBoyItem,ItemSelectedBuyUpgrade)
     end,
 })
+]]--
