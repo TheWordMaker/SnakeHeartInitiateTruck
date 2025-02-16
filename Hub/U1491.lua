@@ -1,16 +1,15 @@
 ----------------------[ Universal Utilities ]----------------------
 getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
+local Workspace = Get.Workspace
 local Players = Get.Players
 local Player = Players.LocalPlayer
 local PlayerCharacter = Player.Character
 local PlayerGui = Player.PlayerGui
-local Workspace = Get.Workspace
-local RunService = Get.RunService
 local Rep = Get.ReplicatedStorage
 local HttpService = Get.HttpService
-local RerollPath = Player.PlayerGui.Reroll
-
-
+local TeleportService = Get.TeleportService
+local VirtualInputManager = Get.VirtualInputManager
+local RerollPath = PlayerGui.Reroll
 local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
 
 
@@ -958,3 +957,192 @@ local function checkPartsTouchingHead()
 		print("Position: X: "..math.floor(part.Position.x).." Y: "..math.floor(part.Position.y).." Z: "..math.floor(part.Position.z))
     end
 end
+
+local x01xa15f = false
+local ToggleNoneTabMisc99 = TabBeta:CreateToggle({
+    Name = "[None] Check touch Head",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        x01xa15f = Value
+        while x01xa15f do
+            checkPartsTouchingHead()
+            wait(0.1)
+        end
+    end,
+})
+
+
+local x09xa48e = false
+local ToggleNoneTabMisc = TabBeta:CreateToggle({
+    Name = "Anti King",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        x09xa48e = Value
+        while x09xa48e do
+			local success,response = pcall(function()
+				if Workspace:WaitForChild(Player.Name).Head:FindFirstChild("King") then
+					for _,v in Players:GetChildren() do
+						if v ~= Player then
+							Rep.SurrenderCrown:FireServer(v)
+						end
+					end
+				end
+			end)
+			if not success then
+				print(response)
+				break
+			end
+            wait(0.1)
+        end
+    end,
+})
+
+local cdeeeza = false
+local ToggleNoneTabMisc3 = TabBeta:CreateToggle({
+    Name = "Teleport mob [depend quest]",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        cdeeeza = Value
+        while cdeeeza do
+			pcall(function()
+				local TargetSelectedQUestmonb = getQuestMobs(QuestSelected)
+				for _,v in pairs(Workspace:GetChildren()) do
+					if table.find(TargetSelectedQUestmonb, v.Name) then
+						v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
+						v.HumanoidRootPart.Anchored = true
+					end
+				end
+			end)
+            wait(0.1)
+        end
+    end,
+})
+local ButtonTrackPower = TabBeta:CreateButton({
+    Name = "Track Power",
+    Callback = function()
+        print("--------[ Tracker ]--------")
+        for i, v in pairs(Player:GetChildren()) do
+            if v:IsA("Folder") then
+                local found = false
+                for _, z in pairs(LookingPower) do
+                    if v.Name == z then
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    print(v.Name)
+                end
+            end
+        end
+	end,
+})
+
+-- BaseLevel Level Name Exp 
+local ButtonTestButton = TabBeta:CreateButton({
+    Name = "Field Test Print",
+    Callback = function()
+        local data = getUserData().Relics
+        for id, fields in pairs(data) do
+			print("Field ID: " .. id)
+			print("BaseLevel: " .. fields.BaseLevel)
+			print("Level: " .. fields.Level)
+			for key, value in pairs(fields) do
+				print(key .. ": " .. tostring(value))
+			end
+        end
+    end,
+})
+
+local ChoosedLevelItem2 = 6
+local SliderLevelItem2 = TabBeta:CreateSlider({
+	Name = "Select Limit Level",
+	Range = {1, 10},
+	Increment = 1,
+	Suffix = "Level",
+	CurrentValue = 6,
+	Flag = "",
+	Callback = function(CurrentValue)
+		ChoosedLevelItem2 = CurrentValue
+   end,
+})
+local AmountBoyItem = 12
+local SliderAmountBuyItem = TabBeta:CreateSlider({
+	Name = "Select amount Buy and Upgrade",
+	Range = {4, 24},
+	Increment = 4,
+	Suffix = "Amount",
+	CurrentValue = 12,
+	Flag = "",
+	Callback = function(CurrentValue)
+		AmountBoyItem = CurrentValue
+   end,
+})
+
+local ItemSelectedBuyUpgrade = "Fist"
+local DropdownSelectItemFocus = TabBeta:CreateDropdown({
+	Name = "Select Item",
+	Options = {"Fist","Relic"},
+	CurrentOption = Options[1],
+	MultipleOptions = false,
+	Flag = "",
+	Callback = function(Value)
+		ItemSelectedBuyUpgrade = Value
+   end,
+})
+
+local function BuyToUpgradeItem(LevelLimit,Amount,Item)
+	for a = 1,Amount do
+		 Rep.RollGear:InvokeServer(Item)
+	end
+	local data = {}
+	local validMaterials = {}
+	if Item == "Fist" then
+		data = getUserData().Fists
+	 else
+		data = getUserData().Relics
+	end
+	for id, fields in pairs(data) do
+		if fields.BaseLevel ~= fields.Level then
+			continue
+		end
+		if fields.Level <= LevelLimit then
+			table.insert(validMaterials,id)
+		end
+	end
+	local args = {
+		[1] = Item,
+		[2] = {}
+	}
+	local numItemsToRemove = 4
+	for b = 1, numItemsToRemove do
+		if #validMaterials > 0 then
+			local indexToRemove = b
+			local removedItem = table.remove(validMaterials, indexToRemove)
+			table.insert(args[2], removedItem)
+		else
+			break
+		end
+	end
+	while #validMaterials > 0 do
+		wait(0.001)
+		Rep.UpgradeItem:InvokeServer(unpack(args))
+	end
+	Rayfield:Notify({
+		Title = "[Buy To Upgrade]",
+		Content = "Finished",
+		Duration = 3,
+		Image = 4483362458,
+	})
+end
+
+
+local ButtonBuyAndUpgrade = TabBeta:CreateButton({
+    Name = "Buy and Upgrade",
+    Callback = function()
+        BuyToUpgradeItem(ChoosedLevelItem2,AmountBoyItem,ItemSelectedBuyUpgrade)
+    end,
+})
