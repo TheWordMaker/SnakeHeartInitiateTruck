@@ -12,7 +12,7 @@ local HttpService = Get.HttpService
 local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 local RerollPath = PlayerGui.Reroll
---local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
+local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
 
 
 local TableQuests = {
@@ -37,7 +37,7 @@ local LookingPower = {
     "MousePositionsThrow",
     "leaderstats"
 	}
---[[
+
 local Old = getsenv(Player.PlayerScripts.MoveHandler)
 
 hookfunction(Old.camshake, function()
@@ -58,7 +58,6 @@ end)
 hookfunction(Old.addparticle, function()
     return
 end)
-]]--
 
 getgenv().Toggles = {
     AutoRoll = false
@@ -497,7 +496,7 @@ local SliderLevelItem = TabShop:CreateSlider({
 		ChoosedLevelItem = CurrentValue
    end,
 })
---[[
+--
 local ButtonMassUpgradeRelic = TabShop:CreateButton({
     Name = "Mass Upgrade Relic",
     Callback = function()
@@ -564,7 +563,6 @@ local ButtonMassUpgradeFist = TabShop:CreateButton({
     end,
 })
 
-]]--
 local DividerTabShop = TabShop:CreateDivider()
 
 ----------------------[ Tab AutoFarm ]----------------------
@@ -1024,7 +1022,6 @@ local ToggleNoneTabMisc3 = TabBeta:CreateToggle({
         end
     end,
 })
---[[
 local ButtonTrackPower = TabBeta:CreateButton({
     Name = "Track Power",
     Callback = function()
@@ -1151,4 +1148,3 @@ local ButtonBuyAndUpgrade = TabBeta:CreateButton({
         BuyToUpgradeItem(ChoosedLevelItem2,AmountBoyItem,ItemSelectedBuyUpgrade)
     end,
 })
-]]--
