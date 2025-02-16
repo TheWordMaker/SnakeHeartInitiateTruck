@@ -116,74 +116,6 @@ local function quest(quest)
 	Rep.TakeQuest:FireServer(quest)
 end
 
-local function getQuestMobs(quest)
-    local enemyType
-    if quest == "Real Amgogus" then 
-        enemyType = {"Cripple"}
-    elseif quest == "Gaming Disorder" then 
-        enemyType = {"Crail"}
-    elseif quest == "Kingdom" then 
-        enemyType = {"Blyke", "Isen", "Remi", "Zeke"}
-    elseif quest == "Rigged Game" then 
-        enemyType = {"Arlo", "John", "Seraphina"}
-    elseif quest == "Trouble in the backrooms" then 
-        enemyType = {"Seer", "John", "Seraphina"}
-    elseif quest == "Something is in the sewers" then 
-        enemyType = {"Cultist"}
-    elseif quest == "Cooking some crossovers" then 
-        enemyType = {"Thunderclap"}
-    elseif quest == "Troubles from another timeline" then 
-        enemyType = {"Roku"}
-    elseif quest == "From another world" then 
-        enemyType = {"Otherworlders"}
-    elseif quest == "Ultra Fair" then 
-        enemyType = {"God"}
-    end
-    return(enemyType)
-end
-
-local function ReverseQuest(Quest)
-	local NewQuest
-	if Quest == "From another world" then
-		NewQuest = "Ultra Fair"
-	elseif Quest == "Ultra Fair" then
-		NewQuest = "From another world"
-	end
-	return NewQuest
-end
-local function ConverseQuestToMob(Quest)
-	local Mob
-	if Quest == "From another world" then
-		Mob = "Otherworlders"
-	elseif Quest == "Ultra Fair" then
-		Mob = "God"
-	end
-	return Mob	
-end
-
-spawn(function()
-	while wait(0.001) do
-		pcall(function()
-			for _,v in pairs(Workspace:GetChildren()) do
-				if v.Name == "Otherworlders" or v.Name == "God" then
-					if v.Humanoid.Health == 0 then
-						v:Destroy()
-					end
-				end
-			end
-		end)
-	end
-end)
-
-local B = Workspace:FindFirstChild("BossSpawns")
-local BossList = {}
-local BossPosition = nil
-for i, v in pairs(B:GetChildren()) do
-    if (BossPosition == nil) then
-        BossPosition = v.CFrame.Position
-    end
-    table.insert(BossList, v.Name)
-end
 
 ----------------------[ The Hub ]----------------------
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
@@ -238,45 +170,6 @@ local ButtonDarkDex = TabMisc:CreateButton({
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
 
-    end,
-})
-
-local ButtonHydroxide = TabMisc:CreateButton({
-    Name = "Hydroxide",
-    Callback = function()
-		local owner = "Upbolt"
-		local branch = "revision"
-		local function webImport(file)
-			return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
-		end
-		webImport("init")
-		webImport("ui/main")
-    end,
-})
-
-local SectionInGameMisc = TabMisc:CreateSection("In-Game Misc")
-
-local ToggleButtonBypassCooldown = false
-local ToggleBypassCooldown = TabMisc:CreateToggle({
-    Name = "Bypass Cooldown Power",
-    CurrentValue = false,
-    Flag = "", 
-    Callback = function(Value)
-        ToggleButtonBypassCooldown = Value
-        while ToggleButtonBypassCooldown do
-            pcall(function()
-				for i,v in pairs(Player:GetChildren()) do
-					for a,z in pairs(AbilityList) do
-						if z == v.Name then
-							for x,y in pairs(v:GetChildren()) do
-								y:Destroy()
-							end
-						end
-					end
-				end
-            end)
-			wait(0.1)
-        end
     end,
 })
 
