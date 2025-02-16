@@ -253,3 +253,29 @@ local ButtonHydroxide = TabMisc:CreateButton({
 		webImport("ui/main")
     end,
 })
+
+local SectionInGameMisc = TabMisc:CreateSection("In-Game Misc")
+
+local ToggleButtonBypassCooldown = false
+local ToggleBypassCooldown = TabMisc:CreateToggle({
+    Name = "Bypass Cooldown Power",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        ToggleButtonBypassCooldown = Value
+        while ToggleButtonBypassCooldown do
+            pcall(function()
+				for i,v in pairs(Player:GetChildren()) do
+					for a,z in pairs(AbilityList) do
+						if z == v.Name then
+							for x,y in pairs(v:GetChildren()) do
+								y:Destroy()
+							end
+						end
+					end
+				end
+            end)
+			wait(0.1)
+        end
+    end,
+})
