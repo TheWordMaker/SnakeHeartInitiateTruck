@@ -10,24 +10,7 @@ elseif game.PlaceId == 8569358381 then
 	ServerID_1 = "OPA"
 end
 wait(0.1)
-local playersToFindMember = {
-	{pseudoMember = "Ert178Levrai", userID = 1179593410},
-    {pseudoMember = "ert178fr", userID = 1071177535},
-	{pseudoMember = "ert178OnePiece", userID = 1994812622},
-	{pseudoMember = "ert178BOT", userID = 1384232334},
-	{pseudoMember = "SpeedNid", userID = 3559874201},
-	{pseudoMember = "GoloupJarali", userID = 2607983898},
-	{pseudoMember = "tro2890", userID = 1122568454},
-	{pseudoMember = "Scorpion_XD3", userID = 298628611},
-	{pseudoMember = "DragonSmelt2", userID = 2908798915},
-	{pseudoMember = "DragonSmelt7", userID = 2908806030},
-	{pseudoMember = "DragonSmelt12", userID = 2908819130},
-	{pseudoMember = "DragonSmelt15", userID = 2908827608},
-	{pseudoMember = "BulletDuglassD", userID = 4654915007},
-	{pseudoMember = "XSam_Xv", userID = 772860717},
-	{pseudoMember = "DaraProxy", userID = 2953008791},
-	{pseudoMember = "yonigamercraft", userID = 223143896}
-}
+
 
 local GunnerCaptain = "Lv8000 Gunner Captain" -- 41 601 per 5 Min
 local Bucky = "Lv500 Bucky" -- 3 703 per 1 Min
@@ -38,22 +21,10 @@ local CaveDemonLv188 = "Lv188 Cave Demon" -- 20 Sec
 local CaveDemonLv198 = "Lv198 Cave Demon" -- 20 Sec
 local CaveDemonLv219 = "Lv219 Cave Demon" -- 20 Sec
 
-local function checkPlayersInGameMember()
-        for _, playerInfoMember in ipairs(playersToFindMember) do
-            if game.Players.LocalPlayer.UserId == playerInfoMember.userID and game.Players.LocalPlayer.Name == playerInfoMember.pseudoMember then
-                _G.MemberTrue = true
-                break
-            end
-        end
-end
-checkPlayersInGameMember()
-game.Players.PlayerAdded:Connect(checkPlayersInGameMember)
+
 wait(0.2)
 
-if not _G.MemberTrue then
-_G.RandomTrue = true
-end
-
+_G.MemberTrue = true
 
 if _G.MemberTrue then
 
