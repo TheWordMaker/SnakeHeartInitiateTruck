@@ -1,60 +1,16 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-
-local Window = Rayfield:CreateWindow({
-   Name = "Ultra Unfair Hub",
-   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "Rayfield Interface Suite",
-   LoadingSubtitle = "by Sirius",
-   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
-
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
-
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "Ultra Unfair Saver"
-   },
-
-   Discord = {
-      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-   },
-
-   KeySystem = false, -- Set this to true to use our key system
-   KeySettings = {
-      Title = "Untitled",
-      Subtitle = "Key System",
-      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
-      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
-   }
-})
-
 ----------------------[ Universal Utilities ]----------------------
 getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
+local Workspace = Get.Workspace
 local Players = Get.Players
 local Player = Players.LocalPlayer
-
-
-local Workspace = Get.Workspace
-local RunService = Get.RunService
+local PlayerCharacter = Player.Character
+local PlayerGui = Player.PlayerGui
 local Rep = Get.ReplicatedStorage
 local HttpService = Get.HttpService
 local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
-local RerollPath = Player.PlayerGui.Reroll
-
-
-local function clickButton()
-    local pos = RerollPath.Rerolls.X.AbsolutePosition + RerollPath.Rerolls.X.AbsoluteSize / 2
-    VirtualInputManager:SendMouseButtonEvent(pos.X, pos.Y, 0, true, RerollPath.Rerolls.X, 0)
-    wait(0.1)
-    VirtualInputManager:SendMouseButtonEvent(pos.X, pos.Y, 0, false, RerollPath.Rerolls.X, 0)
-end
+local RerollPath = PlayerGui.Reroll
+local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
 
 
 local TableQuests = {
@@ -146,8 +102,6 @@ local function getRolledAbilities()
     return abilityResults
 end
 
-
-
 getgenv().AbilityDict = {}
 local AbilityList = {"Spectral"}
 
@@ -221,19 +175,65 @@ spawn(function()
 	end
 end)
 
+local B = Workspace:FindFirstChild("BossSpawns")
+local BossList = {}
+local BossPosition = nil
+for i, v in pairs(B:GetChildren()) do
+    if (BossPosition == nil) then
+        BossPosition = v.CFrame.Position
+    end
+    table.insert(BossList, v.Name)
+end
+
+----------------------[ The Hub ]----------------------
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+   Name = "U1491 Hub",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Rayfield Interface Suite",
+   LoadingSubtitle = "by Sirius",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "U1491 Saver"
+   },
+
+   Discord = {
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
 ----------------------[ Tab Misc ]----------------------
 local TabMisc = Window:CreateTab("Misc", 4483362458)
 
 local SectionGlobalMisc = TabMisc:CreateSection("Global Misc")
 
-local ButtonConsoleTabMisc = TabMisc:CreateButton({
+local ButtonConsole = TabMisc:CreateButton({
     Name = "Console",
     Callback = function()
         game.StarterGui:SetCore("DevConsoleVisible", true)
     end,
 })
 
-local ButtonDarkDexTabMisc = TabMisc:CreateButton({
+local ButtonDarkDex = TabMisc:CreateButton({
     Name = "DarkDex",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
@@ -241,7 +241,7 @@ local ButtonDarkDexTabMisc = TabMisc:CreateButton({
     end,
 })
 
-local ButtonHydroxideTabMisc = TabMisc:CreateButton({
+local ButtonHydroxide = TabMisc:CreateButton({
     Name = "Hydroxide",
     Callback = function()
 		local owner = "Upbolt"
@@ -254,13 +254,13 @@ local ButtonHydroxideTabMisc = TabMisc:CreateButton({
     end,
 })
 
-local SectionInGameMiscTabMisc = TabMisc:CreateSection("In-Game Misc")
+local SectionInGameMisc = TabMisc:CreateSection("In-Game Misc")
 
 local ToggleButtonBypassCooldown = false
-local ToggleBypassCooldownTabMisc = TabMisc:CreateToggle({
+local ToggleBypassCooldown = TabMisc:CreateToggle({
     Name = "Bypass Cooldown Power",
     CurrentValue = false,
-    Flag = "ToggleBypassCooldownTabMisc", 
+    Flag = "", 
     Callback = function(Value)
         ToggleButtonBypassCooldown = Value
         while ToggleButtonBypassCooldown do
@@ -289,7 +289,7 @@ local ToggleActivateAbility = TabMisc:CreateToggle({
         ActivateAbility = Value
         while ActivateAbility do
 			pcall(function()
-				if not Player.Character:FindFirstChild("Head"):FindFirstChild("LeftGlow") then
+				if not PlayerCharacter:FindFirstChild("Head"):FindFirstChild("LeftGlow") then
 					activateAbility()
 				end
 			end)
@@ -298,25 +298,23 @@ local ToggleActivateAbility = TabMisc:CreateToggle({
     end,
 })
 
-local ButtonTrackPowerTabMisc = TabMisc:CreateButton({
-    Name = "Track Power",
-    Callback = function()
-        print("--------[ Tracker ]--------")
-        for i, v in pairs(Player:GetChildren()) do
-            if v:IsA("Folder") then
-                local found = false
-                for _, z in pairs(LookingPower) do
-                    if v.Name == z then
-                        found = true
-                        break
-                    end
-                end
-                if not found then
-                    print(v.Name)
-                end
-            end
+local ActivateBlocking = false
+local ToggleActivateBlocking = TabMisc:CreateToggle({
+    Name = "Activate Blocking",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        ActivateBlocking = Value
+        while ActivateBlocking do
+			pcall(function()
+				if not Workspace:FindFirstChild(Player.Name):FindFirstChild("Blocking") then
+					Rep.Block:FireServer(true)
+					repeat wait() until Workspace:FindFirstChild(Player.Name):FindFirstChild("Blocking")
+				end
+			end)
+            wait(0.1)
         end
-	end,
+    end,
 })
 
 local ToggleButtonAntiLag = false
@@ -338,10 +336,10 @@ Workspace.ChildAdded:Connect(function(child)
     end
 end)
 
-local ToggleAntiLagTabMisc = TabMisc:CreateToggle({
+local ToggleAntiLag = TabMisc:CreateToggle({
     Name = "Remove Particle",
     CurrentValue = false,
-    Flag = "ToggleAntiLagTabMisc", 
+    Flag = "", 
     Callback = function(Value)
         ToggleButtonAntiLag = Value
         while ToggleButtonAntiLag do
@@ -363,23 +361,23 @@ local ToggleAntiLagTabMisc = TabMisc:CreateToggle({
 })
 
 local IncreaseSize = 10
-local SliderSizePoisonTabMisc = TabMisc:CreateSlider({
+local SliderSizePoison = TabMisc:CreateSlider({
 	Name = "Size Poison",
 	Range = {1, 500},
 	Increment = 10,
 	Suffix = "Size",
 	CurrentValue = 10,
-	Flag = "SliderSizePoisonTabMisc", 
+	Flag = "", 
 	Callback = function(Value)
 		IncreaseSize = Value
    end,
 })
 
 local ToggleButtonAutoSizePoison = false
-local ToggleAutoSizePoisonTabMisc = TabMisc:CreateToggle({
+local ToggleAutoSizePoison = TabMisc:CreateToggle({
     Name = "Auto Size Poison",
     CurrentValue = false,
-    Flag = "ToggleAutoSizePoisonTabMisc", 
+    Flag = "", 
     Callback = function(Value)
         ToggleButtonAutoSizePoison = Value
         while ToggleButtonAutoSizePoison do
@@ -450,6 +448,119 @@ local ButtonBuyFistx10TabShop = TabShop:CreateButton({
 		end
     end,
 })
+
+local SectionMassiveBuy = TabShop:CreateSection("Massive Buy")
+
+local function BuyingMassive(Type, Number)
+    for x = 1, Number do
+        Rep.RollGear:InvokeServer(Type)
+        wait(0.0001) 
+    end
+end
+local LabelNotePrice = TabShop:CreateLabel("Note : 100 Item = $2 500 000",0)
+local ButtonBuyRelicMassive = TabShop:CreateButton({
+    Name = "Buy Relic Massive [100]",
+    Callback = function()
+        for x = 1, 10 do
+            coroutine.wrap(function()
+                BuyingMassive("Relic", 10)
+            end)()
+        end
+    end,
+})
+
+local ButtonBuyFistMassive = TabShop:CreateButton({
+    Name = "Buy Fist Massive [100]",
+    Callback = function()
+        for x = 1, 10 do
+            coroutine.wrap(function()
+                BuyingMassive("Fist", 10)
+            end)()
+        end
+    end,
+})
+
+local SectionMassUpgrade = TabShop:CreateSection("Mass Upgrade")
+
+local ChoosedLevelItem = 6
+local SliderLevelItem = TabShop:CreateSlider({
+	Name = "Select Limit Upgrade Level",
+	Range = {1, 10},
+	Increment = 1,
+	Suffix = "Level",
+	CurrentValue = 6,
+	Flag = "",
+	Callback = function(CurrentValue)
+		ChoosedLevelItem = CurrentValue
+   end,
+})
+--
+local ButtonMassUpgradeRelic = TabShop:CreateButton({
+    Name = "Mass Upgrade Relic",
+    Callback = function()
+		local data = {}
+		local validMaterials = {}
+		data = getUserData().Relics
+		for id, fields in data do
+			if fields.BaseLevel == fields.Level and fields.Level <= ChoosedLevelItem then
+				table.insert(validMaterials,id)
+			end
+		end
+		while #validMaterials >= 4 do
+		wait(0.001)
+		local args = {
+		[1] = "Relic",
+		[2] = {
+			[1] = table.remove(validMaterials),
+			[2] = table.remove(validMaterials),
+			[3] = table.remove(validMaterials),
+			[4] = table.remove(validMaterials),
+		}
+		}
+		Rep.UpgradeItem:InvokeServer(unpack(args))
+		end
+		Rayfield:Notify({
+			Title = "[Mass Upgrade Relic]",
+			Content = "Finished",
+			Duration = 3,
+			Image = 4483362458,
+		})
+    end,
+})
+
+local ButtonMassUpgradeFist = TabShop:CreateButton({
+    Name = "Mass Upgrade Fist",
+    Callback = function()
+		local data = {}
+		local validMaterials = {}
+		data = getUserData().Fists
+		for id, fields in data do
+			if fields.BaseLevel == fields.Level and fields.Level <= ChoosedLevelItem then
+				table.insert(validMaterials,id)
+			end
+		end
+		while #validMaterials >= 4 do
+		wait(0.00001)
+		local args = {
+		[1] = "Fist",
+		[2] = {
+			[1] = table.remove(validMaterials),
+			[2] = table.remove(validMaterials),
+			[3] = table.remove(validMaterials),
+			[4] = table.remove(validMaterials),
+		}
+		}
+		Rep.UpgradeItem:InvokeServer(unpack(args))
+		end
+		Rayfield:Notify({
+			Title = "[Mass Upgrade Fist]",
+			Content = "Finished",
+			Duration = 3,
+			Image = 4483362458,
+		})
+    end,
+})
+
 local DividerTabShop = TabShop:CreateDivider()
 
 ----------------------[ Tab AutoFarm ]----------------------
@@ -458,34 +569,59 @@ local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
 local SectionAutoQuest = TabAutoFarm:CreateSection("Quests")
 
 local QuestSelected
-local DropdownSelectQuestTabAutoFarm = TabAutoFarm:CreateDropdown({
+local DropdownSelectQuest = TabAutoFarm:CreateDropdown({
 	Name = "Select Quest",
 	Options = TableQuests,
 	CurrentOption = TableQuests[1],
 	MultipleOptions = false,
-	Flag = "DropdownSelectQuestTabAutoFarm",
+	Flag = "",
 	Callback = function(CurrentOption)
 		QuestSelected = CurrentOption[1]
    end,
 })
 
 local ToggleButtonAutoSelectQuest = false
-local Toggle1AutoSelectQuestTabAutoFarm = TabAutoFarm:CreateToggle({
+local Toggle1AutoSelectQuest = TabAutoFarm:CreateToggle({
     Name = "Auto Quest",
     CurrentValue = false,
-    Flag = "Toggle1AutoSelectQuestTabAutoFarm", 
+    Flag = "", 
     Callback = function(Value)
         ToggleButtonAutoSelectQuest = Value
         while ToggleButtonAutoSelectQuest do
             pcall(function()
-                if not Player.PlayerGui.MainClient.Quest.visible then
+                if not PlayerGui.MainClient.Quest.visible then
 					quest(QuestSelected)
 				else
-					local questCount = Player.PlayerGui.MainClient.Quest.Folder.Objective.progress.text:split("/")
+					local questCount = PlayerGui.MainClient.Quest.Folder.Objective.progress.text:split("/")
 					if questCount[1] == questCount[2] then
 						quest("Completed")
 					end
 				end
+            end)
+			wait(0.1)
+        end
+    end,
+})
+
+local SectionSafeTeleport = TabAutoFarm:CreateSection("Zone Teleport")
+
+local ButtonTeleportSafeZone = TabAutoFarm:CreateButton({
+    Name = "Safe Zone",
+    Callback = function()
+		PlayerCharacter.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
+    end,
+})
+
+local ToggleButtonSafeZone = false
+local Toggle1TeleportSafeZone = TabAutoFarm:CreateToggle({
+    Name = "Auto Teleport SafeZone",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        ToggleButtonSafeZone = Value
+        while ToggleButtonSafeZone do
+            pcall(function()
+				PlayerCharacter.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
             end)
 			wait(0.1)
         end
@@ -504,11 +640,11 @@ local ToggleAutoOtherGodQuest = TabAutoFarm:CreateToggle({
 		local FirstQuest = ReverseQuest("Ultra Fair")
         while OtherToFairQuest do
 			pcall(function()
-				if not Player.PlayerGui.MainClient.Quest.visible then
-					local FirstQuest = ReverseQuest(Player.PlayerGui.MainClient.Quest.name.Text)
+				if not PlayerGui.MainClient.Quest.visible then
+					local FirstQuest = ReverseQuest(PlayerGui.MainClient.Quest.name.Text)
 					quest(FirstQuest)
 				else
-					local questCount = Player.PlayerGui.MainClient.Quest.Folder.Objective.progress.text:split("/")
+					local questCount = PlayerGui.MainClient.Quest.Folder.Objective.progress.text:split("/")
 					if questCount[1] == questCount[2] then
 						quest("Completed")
 					end
@@ -527,8 +663,8 @@ local ToggleAutoOtherGodTeleport = TabAutoFarm:CreateToggle({
     Callback = function(Value)
         OtherToFair = Value
         while OtherToFair do
-			if Player.PlayerGui.MainClient.Quest.visible then
-				local MobQuestOtherGod = ConverseQuestToMob(Player.PlayerGui.MainClient.Quest.name.Text)
+			if PlayerGui.MainClient.Quest.visible then
+				local MobQuestOtherGod = ConverseQuestToMob(PlayerGui.MainClient.Quest.name.Text)
 				pcall(function()
 					local MobCounter = 0
 					for _,v in pairs(Workspace:GetChildren()) do
@@ -539,7 +675,7 @@ local ToggleAutoOtherGodTeleport = TabAutoFarm:CreateToggle({
 					if MobCounter >= 5 then
 						for _,v in pairs(Workspace:GetChildren()) do
 							if v.Name == MobQuestOtherGod and v.Humanoid.Health ~= 0 then
-								v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + Player.Character.HumanoidRootPart.CFrame.lookVector * 2
+								v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
 								v.HumanoidRootPart.Anchored = true
 							end
 						end
@@ -567,6 +703,29 @@ local Toggle1AutoPoison = TabAutoFarm:CreateToggle({
     end,
 })
 
+local ToggleButtonAutoBossPoison = false
+local Toggle1AutoBossPoison = TabAutoFarm:CreateToggle({
+    Name = "Auto Boss with Poison",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        ToggleButtonAutoBossPoison = Value
+        while ToggleButtonAutoBossPoison do
+            pcall(function()
+				for _,v in ipairs(Workspace:GetChildren()) do
+					if v:IsA("Model") and table.find(BossList,v.Name) then
+						if (v:GetModelCFrame().Position - BossPosition).Magnitude < 30 then
+							v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
+							v.HumanoidRootPart.Anchored = true
+						end
+					end
+				end
+            end)
+			wait(0.001)
+        end
+    end,
+})
+
 ----------------------[ Tab AutoSpin ]----------------------
 local TabAutoSpin = Window:CreateTab("Auto Spin", 4483362458)
 
@@ -583,7 +742,7 @@ local DropdownSelectWhiteList = TabAutoSpin:CreateDropdown({
 	Options = AbilityList,
 	CurrentOption = AbilityList[1],
 	MultipleOptions = false,
-	Flag = "DropdownSelectWhiteList",
+	Flag = "",
 	Callback = function(CurrentOption)
 		PowerSelected = CurrentOption[1]
    end,
@@ -596,7 +755,7 @@ local SliderSelectPersonalPotential = TabAutoSpin:CreateSlider({
 	Increment = 0.1,
 	Suffix = "Potential",
 	CurrentValue = 15,
-	Flag = "SliderSelectPersonalPotential",
+	Flag = "",
 	Callback = function(CurrentValue)
 		PotentialSelected1 = CurrentValue
    end,
@@ -619,7 +778,7 @@ local SliderSelectGlobalPotential = TabAutoSpin:CreateSlider({
 	Increment = 0.1,
 	Suffix = "Potential",
 	CurrentValue = 15,
-	Flag = "SliderSelectGlobalPotential",
+	Flag = "",
 	Callback = function(CurrentValue)
 		RollSettings.Threshold = CurrentValue
    end,
@@ -628,7 +787,7 @@ local SliderSelectGlobalPotential = TabAutoSpin:CreateSlider({
 local Toggle1AutoStore = TabAutoSpin:CreateToggle({
     Name = "Auto Store",
     CurrentValue = false,
-    Flag = "Toggle1AutoStore", 
+    Flag = "", 
     Callback = function(CurrentValue)
         RollSettings.Store = CurrentValue
     end,
@@ -679,8 +838,7 @@ RerollPath.ChildRemoved:Connect(function(child)
             repeat
                 RerollPath.Rerolls.X.Visible = true
                 wait()
-				RerollPath.Rerolls.X:Activate()
-                --firesignal(RerollPath.Rerolls.X.MouseButton1Click)
+                firesignal(RerollPath.Rerolls.X.MouseButton1Click)
                 wait()
             until not RerollPath.Rerolls.visible or not Toggles.AutoRoll
             repeat
@@ -695,7 +853,7 @@ end)
 local ToggleAutoSpin = TabAutoSpin:CreateToggle({
     Name = "Auto Roll Power",
     CurrentValue = false,
-    Flag = "ToggleAutoSpin", 
+    Flag = "", 
     Callback = function(Value)
         Toggles.AutoRoll = Value
 		if(Toggles.AutoRoll) then
@@ -715,16 +873,16 @@ local ButtonTest = TabAutoSpin:CreateButton({
 local TabBeta = Window:CreateTab("Beta", 4483362458)
 
 local aotogod = false
-local ToggleAutoGodTabMisc = TabBeta:CreateToggle({
+local ToggleAutoGod = TabBeta:CreateToggle({
     Name = "Auto God [Rumble]",
     CurrentValue = false,
-    Flag = "ToggleAutoGodTabMisc", 
+    Flag = "", 
     Callback = function(Value)
 		aotogod = Value
 		while aotogod do
 			repeat task.wait(0.1) until workspace:FindFirstChild("God")
 			local skillRemote = Rep:FindFirstChild("Remotes"):FindFirstChild("SkillCast")
-			local character = Player.Character or Player.CharacterAdded:Wait()
+			local character = PlayerCharacter or Player.CharacterAdded:Wait()
 			for _, obj in pairs(workspace:GetChildren()) do
 				if obj:IsA("Model") and obj:FindFirstChild("Humanoid") and obj ~= character and obj.Name == "God" then
 					skillRemote:FireServer("Raigo", {
@@ -739,14 +897,7 @@ local ToggleAutoGodTabMisc = TabBeta:CreateToggle({
     end,
 })
 
-local ButtonElThorTabBeta = TabBeta:CreateButton({
-    Name = "Safe Zone ",
-    Callback = function()
-		Player.Character.HumanoidRootPart.CFrame = CFrame.new(-482, 2, -1715)
-    end,
-})
-
-local character = Player.Character or Player.CharacterAdded:Wait()
+local character =  or Player.CharacterAdded:Wait()
 local head = character:WaitForChild("Head")
 
 local function getPartPath(part)
@@ -783,7 +934,7 @@ local ButtonWedgeTabBeta = TabBeta:CreateButton({
 	end,
 })
 
-local character = Player.Character or Player.CharacterAdded:Wait()
+local character = PlayerCharacter or Player.CharacterAdded:Wait()
 local head = character:WaitForChild("Head")
 
 -- Fonction pour récupérer le chemin d'un objet
@@ -808,7 +959,7 @@ local function checkPartsTouchingHead()
 end
 
 local x01xa15f = false
-local ToggleNoneTabMisc = TabBeta:CreateToggle({
+local ToggleNoneTabMisc99 = TabBeta:CreateToggle({
     Name = "[None] Check touch Head",
     CurrentValue = false,
     Flag = "", 
@@ -860,12 +1011,138 @@ local ToggleNoneTabMisc3 = TabBeta:CreateToggle({
 				local TargetSelectedQUestmonb = getQuestMobs(QuestSelected)
 				for _,v in pairs(Workspace:GetChildren()) do
 					if table.find(TargetSelectedQUestmonb, v.Name) then
-						v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + Player.Character.HumanoidRootPart.CFrame.lookVector * 2
+						v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
 						v.HumanoidRootPart.Anchored = true
 					end
 				end
 			end)
             wait(0.1)
         end
+    end,
+})
+local ButtonTrackPower = TabBeta:CreateButton({
+    Name = "Track Power",
+    Callback = function()
+        print("--------[ Tracker ]--------")
+        for i, v in pairs(Player:GetChildren()) do
+            if v:IsA("Folder") then
+                local found = false
+                for _, z in pairs(LookingPower) do
+                    if v.Name == z then
+                        found = true
+                        break
+                    end
+                end
+                if not found then
+                    print(v.Name)
+                end
+            end
+        end
+	end,
+})
+
+-- BaseLevel Level Name Exp 
+local ButtonTestButton = TabBeta:CreateButton({
+    Name = "Field Test Print",
+    Callback = function()
+        local data = getUserData().Relics
+        for id, fields in pairs(data) do
+			print("Field ID: " .. id)
+			print("BaseLevel: " .. fields.BaseLevel)
+			print("Level: " .. fields.Level)
+			for key, value in pairs(fields) do
+				print(key .. ": " .. tostring(value))
+			end
+        end
+    end,
+})
+
+local ChoosedLevelItem2 = 6
+local SliderLevelItem2 = TabBeta:CreateSlider({
+	Name = "Select Limit Level",
+	Range = {1, 10},
+	Increment = 1,
+	Suffix = "Level",
+	CurrentValue = 6,
+	Flag = "",
+	Callback = function(CurrentValue)
+		ChoosedLevelItem2 = CurrentValue
+   end,
+})
+local AmountBoyItem = 12
+local SliderAmountBuyItem = TabBeta:CreateSlider({
+	Name = "Select amount Buy and Upgrade",
+	Range = {4, 24},
+	Increment = 4,
+	Suffix = "Amount",
+	CurrentValue = 12,
+	Flag = "",
+	Callback = function(CurrentValue)
+		AmountBoyItem = CurrentValue
+   end,
+})
+
+local ItemSelectedBuyUpgrade = "Fist"
+local DropdownSelectItemFocus = TabBeta:CreateDropdown({
+	Name = "Select Item",
+	Options = {"Fist","Relic"},
+	CurrentOption = Options[1],
+	MultipleOptions = false,
+	Flag = "",
+	Callback = function(Value)
+		ItemSelectedBuyUpgrade = Value
+   end,
+})
+
+local function BuyToUpgradeItem(LevelLimit,Amount,Item)
+	for a = 1,Amount do
+		 Rep.RollGear:InvokeServer(Item)
+	end
+	local data = {}
+	local validMaterials = {}
+	if Item == "Fist" then
+		data = getUserData().Fists
+	 else
+		data = getUserData().Relics
+	end
+	for id, fields in pairs(data) do
+		if fields.BaseLevel ~= fields.Level then
+			continue
+		end
+		if fields.Level <= LevelLimit then
+			table.insert(validMaterials,id)
+		end
+	end
+	local args = {
+		[1] = Item,
+		[2] = {}
+	}
+	local numItemsToRemove = 4
+	for b = 1, numItemsToRemove do
+		if #validMaterials > 0 then
+			local indexToRemove = b
+			local removedItem = table.remove(validMaterials, indexToRemove)
+			table.insert(args[2], removedItem)
+		else
+			break
+		end
+	end
+	while #validMaterials > 0 do
+		wait(0.001)
+		Rep.UpgradeItem:InvokeServer(unpack(args))
+	end
+	Rayfield:Notify({
+		Title = "[Buy To Upgrade]",
+		Content = "Finished",
+		Duration = 3,
+		Image = 4483362458,
+	})
+end
+
+
+local ButtonBuyAndUpgrade = TabBeta:CreateButton({
+    Name = "Buy and Upgrade",
+    Callback = function()
+        BuyToUpgradeItem(ChoosedLevelItem2,AmountBoyItem,ItemSelectedBuyUpgrade)
     end,
 })
