@@ -897,27 +897,6 @@ local ToggleAutoGod = TabBeta:CreateToggle({
     end,
 })
 
-local character =  or Player.CharacterAdded:Wait()
-local head = character:WaitForChild("Head")
-
-local function getPartPath(part)
-    local path = {}
-    while part do
-        table.insert(path, 1, part.Name)
-        part = part.Parent
-    end
-    return table.concat(path, " -> ")
-end
-
-local function checkPartsTouchingHead()
-    local touchingParts = head:GetTouchingParts()
-    for _, part in ipairs(touchingParts) do
-        local partPath = getPartPath(part)
-        print("La tête touche: "..part.Name)
-		 print("Chemin: "..partPath)
-    end
-end
-
 local ButtonWedgeTabBeta = TabBeta:CreateButton({
     Name = "Delete Wedge",
     Callback = function()
@@ -933,45 +912,6 @@ local ButtonWedgeTabBeta = TabBeta:CreateButton({
 		end
 	end,
 })
-
-local character = PlayerCharacter or Player.CharacterAdded:Wait()
-local head = character:WaitForChild("Head")
-
--- Fonction pour récupérer le chemin d'un objet
-local function getPartPath(part)
-    local path = {}
-    while part do
-        table.insert(path, 1, part.Name)
-        part = part.Parent
-    end
-    return table.concat(path, " -> ")
-end
-
-local function checkPartsTouchingHead()
-    local touchingParts = head:GetTouchingParts()
-    for _, part in ipairs(touchingParts) do
-        local partPath = getPartPath(part)  -- Récupérer le chemin de la partie
-		print("--------[ Now ]--------")
-        print("La tête touche: " .. part.Name)
-		print("Chemin: "..partPath)
-		print("Position: X: "..math.floor(part.Position.x).." Y: "..math.floor(part.Position.y).." Z: "..math.floor(part.Position.z))
-    end
-end
-
-local x01xa15f = false
-local ToggleNoneTabMisc99 = TabBeta:CreateToggle({
-    Name = "[None] Check touch Head",
-    CurrentValue = false,
-    Flag = "", 
-    Callback = function(Value)
-        x01xa15f = Value
-        while x01xa15f do
-            checkPartsTouchingHead()
-            wait(0.1)
-        end
-    end,
-})
-
 
 local x09xa48e = false
 local ToggleNoneTabMisc = TabBeta:CreateToggle({
