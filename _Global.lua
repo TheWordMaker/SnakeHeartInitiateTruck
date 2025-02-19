@@ -1,5 +1,6 @@
 local GameList = {
 	{NameGame = "U1491",Id = 14339696091},
+	{NameGame = "U1491",Id = 11187148979},
 	{NameGame = "L3197",Id = 3101667897},
 	{NameGame = "S2602",Id = 2616498302},
 	{NameGame = "T1786",Id = 17554856486}
