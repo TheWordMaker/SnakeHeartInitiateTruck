@@ -11,7 +11,7 @@ local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 local RerollPath = PlayerGui.Reroll
 local getUserData = function() return getupvalue(getconnections(PlayerGui.MainClient.Equipped.Relic.enhance.MouseButton1Click)[1].Function, 4) end
-
+local Info = require(Rep:WaitForChild("Info"))
 
 local TableQuests = {
     "Real Amgogus",
@@ -65,6 +65,11 @@ getgenv().RollSettings = {
     Amount = 25,
     Threshold = 15,
     Store = false
+}
+
+getgenv().MassUpgradeItemAll = {
+    Level = 6,
+    Type = "Fist"
 }
 
 local function activateAbility()
@@ -185,6 +190,21 @@ for i, v in pairs(B:GetChildren()) do
     table.insert(BossList, v.Name)
 end
 
+local function DecodeStats()
+    return HttpService:JSONDecode(Player.Stats.Value)
+end
+local function MassUpgrade(item, level)
+    local Upgrade = {}
+
+    local ItemTable = DecodeStats()[item.."s"]
+        
+    for a, v in ipairs(ItemTable) do
+        if v.BaseLevel == v.Level and v.Level <= level then
+            table.insert(Upgrade, a)
+        end
+    end
+   Rep.UpgradeItem:InvokeServer(item, Upgrade)
+end
 ----------------------[ The Hub ]----------------------
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
@@ -981,108 +1001,32 @@ local ButtonTrackPower = TabBeta:CreateButton({
 	end,
 })
 
--- BaseLevel Level Name Exp 
-local ButtonTestButton = TabBeta:CreateButton({
-    Name = "Field Test Print",
-    Callback = function()
-        local data = getUserData().Relics
-        for id, fields in pairs(data) do
-			print("Field ID: " .. id)
-			print("BaseLevel: " .. fields.BaseLevel)
-			print("Level: " .. fields.Level)
-			for key, value in pairs(fields) do
-				print(key .. ": " .. tostring(value))
-			end
-        end
-    end,
-})
-
-local ChoosedLevelItem2 = 6
 local SliderLevelItem2 = TabBeta:CreateSlider({
 	Name = "Select Limit Level",
-	Range = {1, 10},
-	Increment = 1,
+	Range = {2, 10},
+	Increment = 0.1,
 	Suffix = "Level",
-	CurrentValue = 6,
+	CurrentValue = MassUpgradeItemAll.Level,
 	Flag = "",
-	Callback = function(CurrentValue)
-		ChoosedLevelItem2 = CurrentValue
-   end,
-})
-local AmountBoyItem = 12
-local SliderAmountBuyItem = TabBeta:CreateSlider({
-	Name = "Select amount Buy and Upgrade",
-	Range = {4, 24},
-	Increment = 4,
-	Suffix = "Amount",
-	CurrentValue = 12,
-	Flag = "",
-	Callback = function(CurrentValue)
-		AmountBoyItem = CurrentValue
+	Callback = function(Value)
+		MassUpgradeItemAll.Level = tonumber(Value)
    end,
 })
 
-local ItemSelectedBuyUpgrade = "Fist"
 local DropdownSelectItemFocus = TabBeta:CreateDropdown({
 	Name = "Select Item",
 	Options = {"Fist","Relic"},
-	CurrentOption = Options[1],
+	CurrentOption = MassUpgradeItemAll.Type,
 	MultipleOptions = false,
 	Flag = "",
 	Callback = function(Value)
-		ItemSelectedBuyUpgrade = Value
+		MassUpgradeItemAll.Type = Value
    end,
 })
 
-local function BuyToUpgradeItem(LevelLimit,Amount,Item)
-	for a = 1,Amount do
-		 Rep.RollGear:InvokeServer(Item)
-	end
-	local data = {}
-	local validMaterials = {}
-	if Item == "Fist" then
-		data = getUserData().Fists
-	 else
-		data = getUserData().Relics
-	end
-	for id, fields in pairs(data) do
-		if fields.BaseLevel ~= fields.Level then
-			continue
-		end
-		if fields.Level <= LevelLimit then
-			table.insert(validMaterials,id)
-		end
-	end
-	local args = {
-		[1] = Item,
-		[2] = {}
-	}
-	local numItemsToRemove = 4
-	for b = 1, numItemsToRemove do
-		if #validMaterials > 0 then
-			local indexToRemove = b
-			local removedItem = table.remove(validMaterials, indexToRemove)
-			table.insert(args[2], removedItem)
-		else
-			break
-		end
-	end
-	while #validMaterials > 0 do
-		wait(0.001)
-		Rep.UpgradeItem:InvokeServer(unpack(args))
-	end
-	Rayfield:Notify({
-		Title = "[Buy To Upgrade]",
-		Content = "Finished",
-		Duration = 3,
-		Image = 4483362458,
-	})
-end
-
-
 local ButtonBuyAndUpgrade = TabBeta:CreateButton({
-    Name = "Buy and Upgrade",
+    Name = "Mass Upgrade",
     Callback = function()
-        BuyToUpgradeItem(ChoosedLevelItem2,AmountBoyItem,ItemSelectedBuyUpgrade)
+		MassUpgrade(MassUpgradeItemAll.Type,MassUpgradeItemAll.Level)
     end,
 })
