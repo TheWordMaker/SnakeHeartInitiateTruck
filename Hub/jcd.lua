@@ -2,6 +2,7 @@
 -- AutoFish
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
+
 local ServerID_1 = nil
 ------------------------------[ WhiteList ]------------------------------
 if game.PlaceId == 3237168 then
@@ -10,7 +11,6 @@ elseif game.PlaceId == 8569358381 then
 	ServerID_1 = "OPA"
 end
 wait(0.1)
-
 
 local GunnerCaptain = "Lv8000 Gunner Captain" -- 41 601 per 5 Min
 local Bucky = "Lv500 Bucky" -- 3 703 per 1 Min
@@ -22,11 +22,7 @@ local CaveDemonLv198 = "Lv198 Cave Demon" -- 20 Sec
 local CaveDemonLv219 = "Lv219 Cave Demon" -- 20 Sec
 
 
-wait(0.2)
 
-_G.MemberTrue = true
-
-if _G.MemberTrue then
 
 local Window = OrionLib:MakeWindow({Name = "Sam and ert178 Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
@@ -296,29 +292,16 @@ local AutoCannonToggle = TabAutoFarm:AddToggle({
 		top = Value
         while top do wait(1)
 			pcall(function()
-				if game.Players.LocalPlayer.PlayerGui.Load.Frame.Load.Visible == false then 
-					for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-						if v:FindFirstChild("HumanoidRootPart") and v:IsA("Model") then
-							v.HumanoidRootPart.CanCollide = false
-							v.HumanoidRootPart.Anchored = true
-							v.HumanoidRootPart.Size = Vector3.new(30, 30, 30)
-							v:FindFirstChild("HumanoidRootPart").Anchored = true
-							v:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,0,15)
-						end
+				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+					if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health ~= 0 then
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Anchored = true
+						v.HumanoidRootPart.Size = Vector3.new(30, 30, 30)
+						v:FindFirstChild("HumanoidRootPart").Anchored = true
+						v:FindFirstChild("HumanoidRootPart").CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,0,15)
 					end
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(90000, 455, 90000)
-					game:GetService("Players").LocalPlayer.Character:FindFirstChild("Cannon Ball").RemoteEvent:FireServer(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,0,15))
-					elseif game.Players.LocalPlayer.PlayerGui.Load.Frame.Load.Visible == true then
-						game.Players.LocalPlayer.PlayerGui.Load.Frame.Load.Visible = false
-						game:GetService("Players").LocalPlayer.Character.CamScript.ClientServerClient:FireServer(game:GetService("Players").LocalPlayer)
-						game:GetService("Players").LocalPlayer.Character.Weapons:FireServer()
-						wait(3)
-						repeat wait()
-						until game.Players.LocalPlayer.Backpack:FindFirstChild("Cannon Ball")
-						wait(0.7)
-						game.Players.LocalPlayer.Backpack:FindFirstChild("Cannon Ball").Parent = game.Players.LocalPlayer.Character
-					end
-				end)
+				end
+			end)
 		end
 	end
 })
@@ -1355,6 +1338,7 @@ game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.Jo
 
   	end    
 })
+if ServerID_1 ==  "OPA" then
 local TabDupeButton3 = TabDupe:AddButton({
 	Name = "Freeze Data",
 	Callback = function()
@@ -1362,7 +1346,7 @@ local TabDupeButton3 = TabDupe:AddButton({
 
   	end    
 })
-
+end
 
 ------------------------------[ Tab Drink Buy ]------------------------------
 
@@ -1704,11 +1688,8 @@ TabAura:AddButton({
 })
 
 
-
-end
-
 spawn(function()
-    while wait(0.1) do
+    while wait(0.001) do
 		for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 			if v:FindFirstChild("HumanoidRootPart") and v:IsA("Model") then
 				if v.Humanoid.Health <= 0 then
