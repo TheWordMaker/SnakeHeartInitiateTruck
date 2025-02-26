@@ -971,7 +971,7 @@ local ToggleNoneTabMisc3 = TabBeta:CreateToggle({
 				local TargetSelectedQUestmonb = getQuestMobs(QuestSelected)
 				for _,v in pairs(Workspace:GetChildren()) do
 					if table.find(TargetSelectedQUestmonb, v.Name) then
-Player.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + Player.Character.HumanoidRootPart.CFrame.lookVector * 2
+Player.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 2) + Player.Character.HumanoidRootPart.CFrame.lookVector * 2
 					end
 				end
 			end)
