@@ -221,9 +221,8 @@ local TabFarmAccountToggle2 = TabFarmAccount:AddToggle({
 					wait(3)
 					game:GetService("Players").LocalPlayer.Character.CamScript.ClientServerClient:FireServer(game:GetService("Players").LocalPlayer)
 					game:GetService("Players").LocalPlayer.Character.Weapons:FireServer()
+					game.Players.LocalPlayer.Character:BreakJoints()
 					wait(5)
-					game:GetService("Players").LocalPlayer.Character:BreakJoints()
-					wait(7)
 				end
 			elseif ServerID_1 ==  "OPA" then
 				if not game.Players.LocalPlayer.PlayerGui.Load.Frame.Visible == true then
