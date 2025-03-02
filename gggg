@@ -1,0 +1,21 @@
+-- Decompiler will be improved soon!
+-- Decompiled with Konstant V2.1, a fast Luau decompiler made in Luau by plusgiant5 (https://discord.gg/wyButjTMhM)
+-- Decompiled on 2025-03-02 14:01:24
+-- Luau version 6, Types version 3
+-- Time taken: 0.000656 seconds
+
+script.Parent.MouseButton1Click:Connect(function() -- Line 1
+	workspace.GlobalReference.SwapServer:FireServer()
+end)
+repeat
+	wait()
+until workspace:FindFirstChild("GlobalReference")
+repeat
+	wait()
+until workspace.GlobalReference:FindFirstChild("SwapServer")
+workspace.GlobalReference.SwapServer.OnClientEvent:Connect(function(arg1) -- Line 6
+	script.Parent.Text = arg1
+	if arg1 == 0 then
+		script.Parent.Text = ""
+	end
+end)
