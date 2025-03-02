@@ -1,0 +1,455 @@
+--Rayflied New opl gui
+----------------------[ Universal Utilities ]----------------------
+getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
+local Workspace = Get.Workspace
+local Players = Get.Players
+local Player = Players.LocalPlayer
+local Rep = Get.ReplicatedStorage
+local UserData = Workspace.UserData["User_"..Player.UserId]
+local ServerID_1 = nil
+if game.PlaceId == 3237168 then
+	ServerID_1 = "OPL"
+elseif game.PlaceId == 8569358381 then
+	ServerID_1 = "OPA"
+end
+
+----------------------[ The Hub ]----------------------
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheWordMaker/SnakeHeartInitiateTruck/main/Rayfieldmod'))()
+local Window = Rayfield:CreateWindow({
+   Name = "Rayfield Example Window",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Rayfield Interface Suite",
+   LoadingSubtitle = "by Sirius",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+
+   Discord = {
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+----------------------[ Tab Farm Accounts ]----------------------
+local TabFarmAccount = Window:CreateTab("Farm Accounts", 4483362458)
+local SectionSpawn = TabFarmAccount:CreateSection("Spawn")
+
+local ButtonOriginalSpawn = TabFarmAccount:CreateButton({
+	Name = "Original Set Spawn",
+	Callback = function()
+		local PositionSpawn = {
+			Vector3.new(-8, 213.7101593017578, -296),
+			Vector3.new(-128, 213.7101593017578, -753),
+			Vector3.new(45, 221.7101593017578, -72),
+			Vector3.new(-237, 222.7101593017578, -1108),
+			Vector3.new(-206, 221.7101593017578, -110.5),
+			Vector3.new(-76, 212.7101593017578, -892),
+			Vector3.new(-428, 213.7101593017578, -154),
+			Vector3.new(-127, 217, -983.2000122070312),
+			Vector3.new(720, 237, 1191.800048828125),
+			Vector3.new(-1281.5, 213.7101593017578, -1353)
+		}
+		for i,v in pairs(PositionSpawn) do
+			game.Workspace.Spawns["Spawn"..i].Position = v
+		end
+	end,
+})
+
+local ButtonMyPositionSpawn = TabFarmAccount:CreateButton({
+	Name = "Set Spawn On My Position",
+	Callback = function()
+		for i,v in pairs(game.Workspace.Spawns:GetChildren()) do
+			v.Position = Player.Character.HumanoidRootPart.Position
+		end
+	end,
+})
+
+local CheckToggleAutoRespawn = false
+local ToggleAutoRespawn = TabFarmAccount:CreateToggle({
+	Name = "Auto Respawn",
+	CurrentValue = false,
+	Flag = "",
+	Callback = function(Value)
+		while CheckToggleAutoRespawn do
+			wait(0.1)
+			pcall(function()
+				if not Player.PlayerGui.Load.Frame.Visible then return end
+				wait(3)
+				Player.PlayerGui.Load.Frame.Load.Visible = false
+				Player.Character.CamScript.ClientServerClient:FireServer(Player)
+				Player.Character.Weapons:FireServer()
+				repeat wait() until not Player.PlayerGui.Load.Frame.Visible or not CheckToggleAutoRespawn
+				wait(3)
+				repeat
+					wait(0.1);
+				until Player.PlayerGui.Load.Frame.Visible or not CheckToggleAutoRespawn
+			end)
+		end
+	end,
+})
+
+local CheckToggleAutoRespawnAndDeath = false
+local ToggleAutoRespawn = TabFarmAccount:CreateToggle({
+	Name = "Auto Respawn And Death",
+	CurrentValue = false,
+	Flag = "",
+	Callback = function(Value)
+		CheckToggleAutoRespawnAndDeath = Value
+		while CheckToggleAutoRespawnAndDeath do
+			wait(0.1)
+			if ServerID_1 == "OPL" then
+				if not Player.PlayerGui.Load.Frame.Visible then
+					wait()
+				else
+					wait(3)
+					Player.Character.CamScript.ClientServerClient:FireServer(Player)
+					Player.Character.Weapons:FireServer()
+					wait(5)
+					Player.Character:BreakJoints()
+					wait(7)
+				end
+			elseif ServerID_1 == "OPA" then
+				if not Player.PlayerGui.Load.Frame.Visible then
+					wait()
+				else
+					wait(3)
+					Player.Character.CamScript.ClientServerClient:FireServer(Player)
+					Player.Character.Weapons:FireServer()
+					wait(5)
+					for a = 1,20 do
+						wait()
+						Player.Character.Drown:FireServer("NOPLS")
+						if not CheckToggleAutoRespawnAndDeath then break end
+					end
+					wait(7)
+				end
+			end
+		end
+	end,
+})
+
+local ButtonResetPlayer = TabFarmAccount:CreateButton({
+	Name = "Reset Player",
+	Callback = function()
+		Player.Character:BreakJoints()
+	end,
+})
+
+----------------------[ Tab AutoFarm ]----------------------
+local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
+
+local CheckToggleAutoCannonBall = false
+local ToggleAutoCannonBallTeleport = TabAutoFarm:CreateToggle({
+   Name = "CannonBall Teleport",
+   CurrentValue = false,
+   Flag = "",
+   Callback = function(Value)
+   CheckToggleAutoCannonBall = Value
+        while CheckToggleAutoCannonBall do 
+			wait(0.1)
+			pcall(function()
+				for i,v in pairs(Workspace.Enemies:GetChildren()) do
+					if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health ~= 0 then
+						v.HumanoidRootPart.CanCollide = false
+						v.HumanoidRootPart.Size = Vector3.new(10, 10, 10)
+						v:FindFirstChild("HumanoidRootPart").Anchored = true
+						v:FindFirstChild("HumanoidRootPart").CFrame = Player.Character.HumanoidRootPart.CFrame*CFrame.new(0,0,6)
+					end
+					if not CheckToggleAutoCannonBall then break end
+				end
+			end)
+		end
+   end,
+})
+
+local function counterthehaki()
+	local countHaki = 1
+	local levelHakidem = UserData.Data.HakiLevel.Value
+	repeat wait()
+		if levelHakidem >= 60 then --55
+			countHaki += 1
+			levelHakidem -=  60 --55 60 
+		end
+	until levelHakidem >= 0
+	local CountedHaki = countHaki
+	return CountedHaki
+end
+
+local SectionHaki = TabAutoFarm:CreateSection("Farm Haki")
+local ParagraphInformationHaki = TabAutoFarm:CreateParagraph({Title = "Haki Information", Content = "Level Haki: N/A\nHaki Exp: N/A\nHaki Exp %: N/A\nHaki Bar: N/A\nHaki Bar %: N/A"})
+
+spawn(function()
+	while true do
+		wait(0.01)
+		local InformationHaki = "Level Haki: "..UserData.Data.HakiLevel.Value.."\nHaki Exp: "..Player.PlayerGui.Menu.Frame.C.Frame.Haki.Frame.Frame.Min.Value.."/"..Player.PlayerGui.Menu.Frame.C.Frame.Haki.Frame.Frame.Max.Value.."\nHaki Exp %: "..(math.floor(Player.PlayerGui.Menu.Frame.C.Frame.Haki.Frame.Frame.Min.Value / Player.PlayerGui.Menu.Frame.C.Frame.Haki.Frame.Frame.Max.Value * 10000) / 100).."%\nHaki Bar: "..Player.PlayerGui.HealthBar.Frame.Haki.Frame.Min.Value.."/"..Player.PlayerGui.HealthBar.Frame.Haki.Frame.Max.Value.."\nHaki Bar %: "..(math.floor(Player.PlayerGui.HealthBar.Frame.Haki.Frame.Min.Value / Player.PlayerGui.HealthBar.Frame.Haki.Frame.Max.Value * 10000) / 100).."%"
+		ParagraphInformationHaki:Set({Title = "Haki Information", Content = InformationHaki})
+	end
+end)
+
+local function FarmHaki()
+	repeat wait()
+		spawn(function()
+			UserData.III:FireServer("On", 1)
+			wait()
+			UserData.III:FireServer("Off", 1)
+		end)
+	until UserData.HakiBar.Value <= (UserData.Data.HakiLevel.Value/100)*30 
+end
+local ButtonFarmHaki = TabAutoFarm:CreateButton({
+   Name = "Farm Haki",
+   Callback = function()
+	for i = 1,3 do
+		repeat wait()
+			spawn(function()
+				UserData.III:FireServer("On", 1)
+				wait()
+				UserData.III:FireServer("Off", 1)
+			end)
+		until UserData.HakiBar.Value <= (UserData.Data.HakiLevel.Value/100)*10 
+	end
+   end,
+})
+--[[
+local CheckToggleAutoHakiBuso = false
+local ToggleAutoHakiBuso = TabAutoFarm:CreateToggle({
+   Name = "Auto Haki Buso",
+   CurrentValue = false,
+   Flag = "",
+   Callback = function(Value)
+   CheckToggleAutoHakiBuso = Value
+        while CheckToggleAutoHakiBuso do 
+			wait(0.1)
+			pcall(function()
+				if UserData.HakiBar.Value <= (Player.PlayerGui:WaitForChild("HealthBar").Frame.Haki.Frame.Max.Value/100)*50 and UserData.UsingHaki.Value then
+					UserData.UsingHaki.Value = false
+					wait(1.5)
+					FarmHaki()
+					repeat wait() 
+						UserData.III:FireServer("Off", 1)
+					until UserData.HakiBar.Value >= Player.PlayerGui:WaitForChild("HealthBar").Frame.Haki.Frame.Max.Value or not CheckToggleAutoHakiBuso
+					wait(1)
+					UserData.UsingHaki.Value = true
+				end
+				if not CheckToggleAutoHakiBuso then break end
+			end)
+		end
+   end,
+})
+]]--
+local LabelHakiSpeed = TabAutoFarm:CreateLabel("Haki Per Sec: N/A", 4483362458)
+
+local hakiValue = UserData.HakiBar
+local previousHaki = hakiValue.Value
+spawn(function()
+	while true do
+		wait(1)	
+		local currentHaki = hakiValue.Value
+		local hakiChange = currentHaki - previousHaki
+		LabelHakiSpeed:Set("Haki Per Sec: "..hakiChange, 4483362458)
+		previousHaki = currentHaki
+	end
+end)
+
+
+
+local SliderHakibar = TabAutoFarm:CreateSlider({
+   Name = "HakiBar",
+   Range = {0, Player.PlayerGui:WaitForChild("HealthBar").Frame.Haki.Frame.Max.Value},
+   Increment = 1,
+   Suffix = "Haki",
+   CurrentValue = 10,
+   Flag = "Slider1", 
+   Callback = function(Value)
+   end,
+})
+
+spawn(function()
+	while true do
+		wait(0.0001)
+		SliderHakibar:Set(UserData.HakiBar.Value,Player.PlayerGui:WaitForChild("HealthBar").Frame.Haki.Frame.Max.Value)
+	end
+end)
+
+local CheckToggleAutoHakiV2 = false
+local ToggleAutoHakiV2 = TabAutoFarm:CreateToggle({
+   Name = "Auto Haki V2",
+   CurrentValue = false,
+   Flag = "",
+   Callback = function(Value)
+   CheckToggleAutoHakiV2 = Value
+        while CheckToggleAutoHakiV2 do 
+			wait(0.001)
+			local Thecounter = counterthehaki()
+			for i = 1,Thecounter do
+				if UserData.HakiBar.Value <= (UserData.Data.HakiLevel.Value/100)*30 then break end
+				FarmHaki()
+			end
+			repeat wait() 
+			UserData.III:FireServer("Off", 1)
+			until UserData.HakiBar.Value >= (Player.PlayerGui:WaitForChild("HealthBar").Frame.Haki.Frame.Max.Value/100)*90 or not CheckToggleAutoHakiV2
+		end
+   end,
+})
+
+spawn(function()
+    while wait(0.0001) do
+		pcall(function()
+			for _,v1 in pairs(Workspace.Enemies:GetChildren()) do
+				if v1:FindFirstChild("HumanoidRootPart") and v1:IsA("Model") then
+					if v1.Humanoid.Health <= 0 then
+						v1:Destroy()
+					end
+				end
+			end
+		end)
+	end
+end)
+
+----------------------[ Tab AutoFarm Fruit ]----------------------
+local TabAutoFarmFruit = Window:CreateTab("AutoFarm Fruit", 4483362458)
+
+----------------------[ Tab Compass Things ]----------------------
+local TabCompassThings = Window:CreateTab("Compass Things", 4483362458)
+local SectionCompass = TabCompassThings:CreateSection("Auto Compass")
+
+local LabelCompass = TabCompassThings:CreateLabel("Number Compass : N/A")
+spawn(function()
+	while true do
+		wait(0.01)
+		LabelCompass:Set("Number Compass : "..UserData.Data.CompassTokens.Value.."/"..UserData.Data.CompassTokenLimit.Value)
+	end
+end)
+
+local ButtonBuyX1Compass = TabCompassThings:CreateButton({
+	Name = "x1 Compass",
+	Callback = function()
+		Workspace.Merchants.QuestMerchant.Clickable.Retum:FireServer("Claim1")
+	end,
+})
+
+local ButtonBuyX10Compass = TabCompassThings:CreateButton({
+	Name = "x10 Compass",
+	Callback = function()
+		Workspace.Merchants.QuestMerchant.Clickable.Retum:FireServer("Claim10")
+	end,
+})
+
+local CheckToggleGiveAllCompass = false
+local ToggleAutoRespawn = TabCompassThings:CreateToggle({
+	Name = "Give All Compass",
+	CurrentValue = false,
+	Flag = "",
+	Callback = function(Value)
+		CheckToggleGiveAllCompass = Value
+		while CheckToggleGiveAllCompass do
+			wait(0.1)
+			repeat wait() 
+				workspace.Merchants.QuestMerchant.Clickable.Retum:FireServer("Claim10")
+			until UserData.Data.CompassTokens.Value == 0 or not CheckToggleGiveAllCompass
+		end
+	end,
+})
+
+local CheckToggleAutoTeleportCompass = false
+local ToggleAutoTeleportCompass = TabCompassThings:CreateToggle({
+	Name = "Auto Teleport Compass",
+	CurrentValue = false,
+	Flag = "",
+	Callback = function(Value)
+		CheckToggleAutoTeleportCompass = Value
+		while CheckToggleAutoTeleportCompass do
+			wait(0.1)
+			pcall(function()
+				local Compass = Player.Backpack:FindFirstChild("Compass");
+				local Compass2 = Player.Character:FindFirstChild("Compass");
+				if Compass or Compass2 then
+					local OldPostiton = Player.Character.HumanoidRootPart.Position;
+					Player.Character.Humanoid:UnequipTools();
+					Compass.Parent = Player.Character;
+					Player.Character.HumanoidRootPart.CFrame = CFrame.new(Compass.Poser.Value);
+					Compass:Activate();
+					wait(0.3);
+					Player.Character.HumanoidRootPart.CFrame = CFrame.new(OldPostiton);
+				end
+			end)
+		end
+	end,
+})
+
+----------------------[ Tab Dupe ]----------------------
+local TabDupe = Window:CreateTab("Dupe", 4483362458)
+
+----------------------[ Tab Shop Items ]----------------------
+local TabShopItems = Window:CreateTab("Shop Items", 4483362458)
+local SectionSimpleDrink = TabShopItems:CreateSection("Buy Simple Drink")
+
+local ButtonBuySmoothie = TabShopItems:CreateButton({
+	Name = "x1 Buy Smoothie",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("DrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Smoothie")
+	end,
+})
+local ButtonBuyCider = TabShopItems:CreateButton({
+	Name = "x1 Buy Cider",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("DrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Cider")
+	end,
+})
+local ButtonBuyLemonade = TabShopItems:CreateButton({
+	Name = "x1 Buy Lemonade",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("DrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Lemonade")
+	end,
+})
+local ButtonBuyJuice = TabShopItems:CreateButton({
+	Name = "x1 Buy Juice",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("DrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Juice")
+	end,
+})
+
+local SectionDrink = TabShopItems:CreateSection("Buy Drink+")
+
+local ButtonBuySmoothie = TabShopItems:CreateButton({
+	Name = "x1 Buy Smoothie+",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("BetterDrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Smoothie+")
+	end,
+})
+local ButtonBuyCider = TabShopItems:CreateButton({
+	Name = "x1 Buy Cider+",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("BetterDrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Cider+")
+	end,
+})
+local ButtonBuyLemonade = TabShopItems:CreateButton({
+	Name = "x1 Buy Lemonade+",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("BetterDrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Lemonade+")
+	end,
+})
+local ButtonBuyJuice = TabShopItems:CreateButton({
+	Name = "x1 Buy Juice+",
+	Callback = function()
+		Workspace:WaitForChild("Merchants"):WaitForChild("BetterDrinkMerchant"):WaitForChild("Clickable"):WaitForChild("Retum"):FireServer("Juice+")
+	end,
+})
