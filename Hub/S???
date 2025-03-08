@@ -83,12 +83,16 @@ end
 local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
 
 for _,v in pairs(Workspace:GetChildren()) do
-if v:IsA("Folder") and v:FindFirstChild("QuestName") then
+if v:IsA("Folder") then
+for _v2 in pairs(v:GetChildren()) do
+if  v2:FindFirstChild("QuestName") then
 TabAutoFarm:CreateButton({
-   Name = v.Name,
+   Name = "Teleport Quest ["..v2.QuestName.Value.."]",
    Callback = function()
-  Player.Character.HumanoidRootPart.CFrame = v:FindFirstChild("HumanoidRootPart").CFrame
+  v2:FindFirstChild("Head").CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
    end,
 })
+end
+end
 end
 end
