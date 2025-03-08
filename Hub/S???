@@ -79,22 +79,13 @@ end
    end
    end,
 })
-local Button = TabAutoFarm:CreateButton({
-   Name = "Button Example",
-   Callback = function()
-   -- The function that takes place when the button is pressed
-   end,
-})
+
+
 for _,v in pairs(Workspace:GetChildren()) do
 if v:IsA("Folder") then
 for _,v2 in pairs(v:GetChildren()) do
 if v2:FindFirstChild("QuestName") then
-TabAutoFarm:CreateButton({
-   Name = "Teleport Quest ["..v2.QuestName.Value.."]",
-   Callback = function()
-  v2:FindFirstChild("Head").CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
-   end,
-})
+print("Name: "..v.Name.." Quest: "..v2.QuestName.Valye)
 end
 end
 else
