@@ -94,5 +94,7 @@ TabAutoFarm:CreateButton({
 })
 end
 end
+else
+break
 end
 end
