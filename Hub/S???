@@ -86,7 +86,11 @@ if v:IsA("Folder") then
 for _,v2 in pairs(v:GetChildren()) do
 if v2:IsA("Model") and v2:FindFirstChild("QuestName") then
 print("Name: "..v.Name.." T: "..v2.Name)
+else
+break
 end
 end
+else
+break
 end
 end
