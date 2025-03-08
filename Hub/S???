@@ -85,8 +85,6 @@ local Button = TabAutoFarm:CreateButton({
    -- The function that takes place when the button is pressed
    end,
 })
-local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
-
 for _,v in pairs(Workspace:GetChildren()) do
 if v:IsA("Folder") then
 for _,v2 in pairs(v:GetChildren()) do
