@@ -79,10 +79,10 @@ end
    end
    end,
 })
-local tt =TabAutoFarm:CreateButton({
-   Name = "h",
+local Button = TabAutoFarm:CreateButton({
+   Name = "Button Example",
    Callback = function()
-  
+   -- The function that takes place when the button is pressed
    end,
 })
 local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
