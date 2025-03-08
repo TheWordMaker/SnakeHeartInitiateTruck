@@ -84,11 +84,7 @@ end
 for _,v in pairs(Workspace:GetChildren()) do
 if v:IsA("Folder") then
 for _,v2 in pairs(v:GetChildren()) do
-if v2:FindFirstChild("QuestName") then
-print("Name: "..v.Name.." Quest: "..v2.QuestName.Valye)
+print("Name: "..v.Name.." T: "..v2.Name)
 end
-end
-else
-break
 end
 end
