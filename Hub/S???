@@ -87,7 +87,7 @@ if v:IsA("Folder") and v:FindFirstChild("QuestName") then
 TabAutoFarm:CreateButton({
    Name = "Teleport Head ["..v.QuestName.Value.."]",
    Callback = function()
-   v:FindFirstChild("Head").CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+  Player.Character.HumanoidRootPart.CFrame = v:FindFirstChild("HumanoidRootPart").CFrame
    end,
 })
 end
