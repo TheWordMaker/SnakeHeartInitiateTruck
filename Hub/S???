@@ -82,3 +82,9 @@ end
 
 local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
 
+for _,v in pairs(Workspace:GetChildren()) do
+if v:IsA("Folder") then
+print("Name: "..v.Name)
+end
+end
+--[3]["Big head boy"].QuestName
