@@ -79,7 +79,12 @@ end
    end
    end,
 })
-
+TabAutoFarm:CreateButton({
+   Name = "h",
+   Callback = function()
+  
+   end,
+})
 local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
 
 for _,v in pairs(Workspace:GetChildren()) do
