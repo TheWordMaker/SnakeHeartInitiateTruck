@@ -79,7 +79,7 @@ end
    end
    end,
 })
-TabAutoFarm:CreateButton({
+local tt =TabAutoFarm:CreateButton({
    Name = "h",
    Callback = function()
   
