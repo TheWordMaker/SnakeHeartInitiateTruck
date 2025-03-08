@@ -80,3 +80,5 @@ end
    end,
 })
 
+local SectionAutoFarm = TabAutoFarm:CreateSection("Teleport Quest")
+
