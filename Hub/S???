@@ -16,14 +16,21 @@ if v1.ClassName == "Folder" then
 for _,v2 in pairs(v1:GetChildren()) do
 if v2.ClassName == "SpawnLocations" then
 v1.Name = "Folder_SpawnLocation"
-elseif v2.ClassName == "Model" and v2.Name == "Big head boy" then
+end
+if v2.ClassName == "Model" and v2.Name == "Big head boy" then
 v1.Name = "Folder_Quests/Shop"
-elseif v2.ClassName == "Part" then
+end
+if v2.ClassName == "Part" then
 v1.Name = "Folder_Chest"
-elseif v2.ClassName == "Model" and v2.Name == "Island3" then
+end
+if v2.ClassName == "Model" and v2.Name == "Island3" then
 v1.Name = "Folder_Islands"
-elseif v2.ClassName == "Model" and v2.Name == "Attacking Noob(Lvl:100)" then
+end
+if v2.ClassName == "Model" and v2.Name == "Attacking Noob(Lvl:100)" then
 v1.Name = "Folder_Enemies"
+end
+for _,v3 in pairs(Workspace:GetChildren()) do
+repeat wait() until Workspace:FindFirstChild("Folder_SpawnLocation") and Workspace:FindFirstChild("Folder_Quests/Shop") and Workspace:FindFirstChild("Folder_Chest") and Workspace:FindFirstChild("Folder_Islands") and Workspace:FindFirstChild("Folder_Enemies")
 end
 end
 end
