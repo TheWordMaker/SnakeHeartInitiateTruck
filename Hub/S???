@@ -74,33 +74,3 @@ local Window = Rayfield:CreateWindow({
 local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
 
 
-
-    
---[[
-for _,v in pairs(Workspace:GetChildren()) do
-if v:IsA("Folder") then
-for _,v2 in pairs(v:GetChildren()) do
-if v2:IsA("Model") and v2:FindFirstChild("QuestName") then
-print("Name: "..v.Name.." T: "..v2.Name)
-else
-break
-end
-end
-else
-break
-end
-end
-]--
---[[
-for _,v in pairs(workspace:GetChildren()) do
-if v.Name == "" and v:FindFirstChild("Big head boy")  then
-for _,v1 in pairs(v:GetChildren()) do
-if v1:FindFirstChild("QuestName") then
-print(v1.Name)
---fireclickdetector(v1.Head.ClickDetector)
---fireclickdetector(v1.Head.ClickDetector)
-end
-end
-end 
-end
-]--
