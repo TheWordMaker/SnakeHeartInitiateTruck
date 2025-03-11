@@ -32,9 +32,6 @@ end
 end
 end
 end)
-for _,v3 in pairs(Workspace:GetChildren()) do
-repeat wait() until Workspace:FindFirstChild("Folder_SpawnLocation") and Workspace:FindFirstChild("Folder_Quests/Shop") and Workspace:FindFirstChild("Folder_Chest") and Workspace:FindFirstChild("Folder_Islands") and Workspace:FindFirstChild("Folder_Enemies")
-end
 end
 
 
