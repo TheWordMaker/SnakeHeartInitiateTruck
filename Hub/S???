@@ -38,7 +38,8 @@ if v1.ClassName == "Folder" then
 for _,v2 in pairs(v1:GetChildren()) do
 if v2.ClassName == "SpawnLocation" then
 v1.Name = "Folder_SpawnLocation"
-
+elseif v2.ClassName == "Model" and v2.Name == "Big head boy" then
+v1.Name = "Folder_Quest/Shop"
 end
 end
 end
