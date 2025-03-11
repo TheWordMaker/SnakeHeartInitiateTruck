@@ -9,6 +9,22 @@ local RunService = Get.RunService
 local Rep = Get.ReplicatedStorage
 local HttpService = Get.HttpService
 
+local function NamingFolder()
+spawn(function()
+for _,v1 in pairs(Workspace:GetChildren()) do
+if v1.ClassName == "Folder" then
+for _,v2 in pairs(v1:GetChildren()) do
+if v2.ClassName == "SpawnLocation" then
+v1.Name = "Folder_SpawnLocation"
+elseif v2.ClassName == "Model" and v2.Name == "Big head boy" then
+v1.Name = "Folder_Quest/Shop"
+end
+end
+end
+end
+end)
+end
+
 
 do
     local old;
@@ -25,26 +41,13 @@ do
                 for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
                     if v.ClassName == "Script" and v:FindFirstChild("") then
                         v:Destroy()
+NamingFolder()
                     end
                 end
             end)
         end
     end)
 end
-
-spawn(function()
-for _,v1 in pairs(Workspace:GetChildren()) do
-if v1.ClassName == "Folder" then
-for _,v2 in pairs(v1:GetChildren()) do
-if v2.ClassName == "SpawnLocation" then
-v1.Name = "Folder_SpawnLocation"
-elseif v2.ClassName == "Model" and v2.Name == "Big head boy" then
-v1.Name = "Folder_Quest/Shop"
-end
-end
-end
-end
-end)
 
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
