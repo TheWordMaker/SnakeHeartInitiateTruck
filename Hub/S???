@@ -97,8 +97,10 @@ local ButtonTeleportChest = TabAutoFarm:CreateButton({
    Name = "Teleport Chest",
    Callback = function()
    for _,v in pairs(Workspace:FindFirstChild("Folder_Chest"):GetChildren()) do
+if v.ClassName == "Part" then
 Player.Character.HumanoidRootPart.CFrame = v.CFrame
 wait(0.3)
+end
 end
    end,
 })
