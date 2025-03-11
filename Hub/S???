@@ -80,7 +80,7 @@ end
    end,
 })
 
-
+--[[
 for _,v in pairs(Workspace:GetChildren()) do
 if v:IsA("Folder") then
 for _,v2 in pairs(v:GetChildren()) do
@@ -93,4 +93,17 @@ end
 else
 break
 end
+end
+]--
+
+for _,v in pairs(workspace:GetChildren()) do
+if v.Name == "" and v:FindFirstChild("Big head boy")  then
+for _,v1 in pairs(v:GetChildren()) do
+if v1:FindFirstChild("QuestName") then
+print(v1.Name)
+--fireclickdetector(v1.Head.ClickDetector)
+--fireclickdetector(v1.Head.ClickDetector)
+end
+end
+end 
 end
