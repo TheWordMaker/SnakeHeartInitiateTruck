@@ -110,3 +110,5 @@ end
 end
    end,
 })
+
+local SectionQuest = TabAutoFarm:CreateSection("Quest Npc")
