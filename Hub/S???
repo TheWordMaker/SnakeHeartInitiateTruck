@@ -9,6 +9,31 @@ local HttpService = Get.HttpService
 local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 
+spawn(function()
+do
+    local old;
+    old = hookmetamethod(game, "__namecall", function(Self, ...)
+        if getnamecallmethod() == "Kick" or getnamecallmethod() == "kick" and not checkcaller() then
+            return
+        end
+        return old(Self, ...)
+    end)
+
+    spawn(function()
+        while wait() do
+            pcall(function()
+                for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                    if v.ClassName == "Script" and v:FindFirstChild("") then
+                        v:Destroy()
+                    end
+                end
+            end)
+        end
+    end)
+end
+end)
+
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "Rayfield Example Window",
@@ -45,6 +70,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
+
 
 
     
