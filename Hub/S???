@@ -10,6 +10,7 @@ local TeleportService = Get.TeleportService
 local VirtualInputManager = Get.VirtualInputManager
 
 spawn(function()
+while true do wait(0.00001)
 do
     local old;
     old = hookmetamethod(game, "__namecall", function(Self, ...)
@@ -30,6 +31,7 @@ do
             end)
         end
     end)
+end
 end
 end)
 
