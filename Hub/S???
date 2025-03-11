@@ -10,8 +10,17 @@ local Rep = Get.ReplicatedStorage
 local HttpService = Get.HttpService
 
 
+do
+    local old;
+    old = hookmetamethod(game, "__namecall", function(Self, ...)
+        if getnamecallmethod() == "Kick" or getnamecallmethod() == "kick" and not checkcaller() then
+            return
+        end
+        return old(Self, ...)
+    end)
+
     spawn(function()
-        while wait(0.001) do
+        while wait(0.0001) do
             pcall(function()
                 for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
                     if v.ClassName == "Script" and v:FindFirstChild("") then
@@ -21,6 +30,7 @@ local HttpService = Get.HttpService
             end)
         end
     end)
+end
 
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
