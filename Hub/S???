@@ -92,7 +92,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
-
+--[[
 local ButtonTeleportChest = TabAutoFarm:CreateButton({
    Name = "Teleport Chest",
    Callback = function()
@@ -102,3 +102,4 @@ wait(0.3)
 end
    end,
 })
+]]--
