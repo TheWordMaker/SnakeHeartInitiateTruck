@@ -1,5 +1,14 @@
 ----------------------[ Universal Utilities ]----------------------
 
+getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
+
+local Players = Get.Players
+local Player = Players.LocalPlayer
+local Workspace = Get.Workspace
+local RunService = Get.RunService
+local Rep = Get.ReplicatedStorage
+local HttpService = Get.HttpService
+
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
