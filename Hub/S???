@@ -123,9 +123,46 @@ local ButtonQuest = TabAutoFarm:CreateButton({
 fireclickdetector(v.Head.ClickDetector)
    end,
 })
-
-
 end 
 end
 
 
+local function CheckQuest(Quest) 
+local HaveQuest = false
+for _,v1 in pairs(Player.Backpack:GetChildren()) do
+if v1.Name == Quest.QuestName.Value then
+HaveQuest = true
+end
+end
+if HaveQuest == false then 
+fireclickdetector(Quest.Head.ClickDetector)
+fireclickdetector(Quest.Head.ClickDetector)
+HaveQuest = true
+end 
+if HaveQuest == true then
+
+end
+end
+
+for _,v1 in pairs(workspace:FindFirstChild("Folder_Quests/Shop"):GetChildren()) do
+if v1:FindFirstChild("QuestName") then
+local ToggleFarmQuest = TabAutoFarm:CreateToggle({
+   Name = "Toggle Example",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+local FoundQuest = false
+   
+CheckQuest(v1) 
+if v2.Name == v1.QuestName.Value then
+FoundQuest = true
+end
+end
+if FoundQuest == false then
+
+end
+
+   end,
+})
+end
+end
