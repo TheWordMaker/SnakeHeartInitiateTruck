@@ -140,7 +140,17 @@ fireclickdetector(Quest.Head.ClickDetector)
 HaveQuest = true
 end 
 if HaveQuest == true then
+local str = "1/10"
+local separator = "/"
+local result = {}
 
+for part in string.gmatch(str, "[^" .. separator .. "]+") do
+    table.insert(result, part)
+end
+
+if result[1] == result[2] then
+
+end 
 end
 end
 
@@ -159,7 +169,17 @@ FoundQuest = true
 end
 end
 if FoundQuest == false then
+local str = "1/10"
+local separator = "/"
+local result = {}
 
+for part in string.gmatch(str, "[^" .. separator .. "]+") do
+    table.insert(result, part)
+end
+
+print(result[1])  -- 1
+print(result[2])  -- 10
+if 
 end
 
    end,
