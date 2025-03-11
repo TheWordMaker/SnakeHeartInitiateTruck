@@ -117,7 +117,7 @@ local SectionQuest = TabAutoFarm:CreateSection("Quest Npc")
 for _,v in pairs(workspace:FindFirstChild("Folder_Quests/Shop"):GetChildren()) do
 if v:FindFirstChild("QuestName") then
 local ButtonQuest = TabAutoFarm:CreateButton({
-   Name = "Give Quest",
+   Name = "Give Quest ["..v.QuestName.Value.."]",
    Callback = function()
    fireclickdetector(v.Head.ClickDetector)
 fireclickdetector(v.Head.ClickDetector)
