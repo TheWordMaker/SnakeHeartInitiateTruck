@@ -1,4 +1,4 @@
-,----------------------[ Universal Utilities ]----------------------
+----------------------[ Universal Utilities ]----------------------
 
 getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetService(Idx) end})
 
@@ -92,3 +92,13 @@ local Window = Rayfield:CreateWindow({
 })
 
 local TabAutoFarm = Window:CreateTab("AutoFarm", 4483362458)
+
+local ButtonTeleportChest = TabAutoFarm:CreateButton({
+   Name = "Teleport Chest",
+   Callback = function()
+   for _,v in pairs(Workspace:FindFirstChild("Folder_Chest"):GetChildren()) do
+Player.Character.HumanoidRootPart.CFrame = v.CFrame
+wait(0.3)
+end
+   end,
+})
