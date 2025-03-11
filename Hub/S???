@@ -18,6 +18,8 @@ if v2.ClassName == "SpawnLocation" then
 v1.Name = "Folder_SpawnLocation"
 elseif v2.ClassName == "Model" and v2.Name == "Big head boy" then
 v1.Name = "Folder_Quest/Shop"
+elseif v2.ClassName == "Part" then
+v1.Name = "Folder_Chest"
 end
 end
 end
