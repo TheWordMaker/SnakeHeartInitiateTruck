@@ -37,7 +37,7 @@ for _,v1 in pairs(Workspace:GetChildren()) do
 if v1.ClassName == "Folder" then
 for _,v2 in pairs(v1:GetChildren()) do
 if v2.ClassName == "SpawnLocation" then
-v1.Name = Folder_SpawnLocation"
+v1.Name = "Folder_SpawnLocation"
 
 end
 end
