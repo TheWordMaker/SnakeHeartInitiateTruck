@@ -15,8 +15,8 @@ pcall(function()
 for _,v1 in pairs(Workspace:GetChildren()) do
 if v1.ClassName == "Folder" then
 for _,v2 in pairs(v1:GetChildren()) do
-if v2.ClassName == "SpawnLocations" then
-v1.Name = "Folder_SpawnLocation"
+if v2.ClassName == "SpawnLocation" then
+v1.Name = "Folder_SpawnLocations"
 end
 if v2.ClassName == "Model" and v2.Name == "Big head boy" then
 v1.Name = "Folder_Quests/Shop"
