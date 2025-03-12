@@ -174,7 +174,7 @@ end
 local SetTeleportEnemie = false
 local ToggleFarmQuest = TabAutoFarm:CreateToggle({
    Name = "TeleportMob",
-   CrrentValue = false,
+   CurrentValue = false,
    Flag = "Toggle1",
    Callback = function(Value)
 SetTeleportEnemie = Value
