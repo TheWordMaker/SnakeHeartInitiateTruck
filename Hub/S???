@@ -129,8 +129,8 @@ end
 
 local function CheckQuest(Quest) 
 local HaveQuest = false
-local QuestTool = ""
-local ToolTipQuest = ""
+local QuestTool
+local ToolTipQuest
 for _,v1 in pairs(Player.Backpack:GetChildren()) do
 if v1.Name == Quest.QuestName.Value then
 HaveQuest = true
