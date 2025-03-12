@@ -129,9 +129,11 @@ end
 
 local function CheckQuest(Quest) 
 local HaveQuest = false
+local QuestTool = ""
 for _,v1 in pairs(Player.Backpack:GetChildren()) do
 if v1.Name == Quest.QuestName.Value then
 HaveQuest = true
+QuestTool = Quest.QuestName.Value
 end
 end
 if HaveQuest == false then 
@@ -149,7 +151,7 @@ for part in string.gmatch(str, "[^" .. separator .. "]+") do
 end
 
 if result[1] == result[2] then
-
+Player.Character.Humanoid:EquipTool(QuestTool)
 end 
 end
 end
