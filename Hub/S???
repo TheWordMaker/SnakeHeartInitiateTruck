@@ -160,30 +160,10 @@ for _,v1 in pairs(workspace:FindFirstChild("Folder_Quests/Shop"):GetChildren()) 
 if v1:FindFirstChild("QuestName") then
 local ToggleFarmQuest = TabAutoFarm:CreateToggle({
    Name = "Toggle Example",
-   CurrentValue = false,
+   CrrentValue = false,
    Flag = "Toggle1",
    Callback = function(Value)
-local FoundQuest = false
-   
 CheckQuest(v1) 
-if v2.Name == v1.QuestName.Value then
-FoundQuest = true
-end
-end
-if FoundQuest == false then
-local str = "1/10"
-local separator = "/"
-local result = {}
-
-for part in string.gmatch(str, "[^" .. separator .. "]+") do
-    table.insert(result, part)
-end
-
-print(result[1])  -- 1
-print(result[2])  -- 10
-if 
-end
-
    end,
 })
 end
