@@ -130,10 +130,12 @@ end
 local function CheckQuest(Quest) 
 local HaveQuest = false
 local QuestTool = ""
+local ToolTipQuest ""
 for _,v1 in pairs(Player.Backpack:GetChildren()) do
 if v1.Name == Quest.QuestName.Value then
 HaveQuest = true
 QuestTool = Quest.QuestName.Value
+ToolTipQuest = v1.ToolTip
 end
 end
 if HaveQuest == false then 
@@ -142,7 +144,7 @@ fireclickdetector(Quest.Head.ClickDetector)
 HaveQuest = true
 end 
 if HaveQuest == true then
-local str = "1/10"
+local str = ToolTipQuest
 local separator = "/"
 local result = {}
 
