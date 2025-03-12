@@ -144,7 +144,7 @@ fireclickdetector(Quest.Head.ClickDetector)
 HaveQuest = true
 end 
 if HaveQuest == true then
-local str = ToolTipQuest
+local str = "ToolTipQuest"
 local separator = "/"
 local result = {}
 
