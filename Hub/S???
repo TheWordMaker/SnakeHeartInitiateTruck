@@ -170,7 +170,7 @@ CheckQuest(v1)
 })
 end
 end
-
+                game.Players.LocalPlayer.Character.Humanoid:UnequipTools();
 local SetTeleportEnemie = false
 local ToggleFarmQuest = TabAutoFarm:CreateToggle({
    Name = "TeleportMob",
