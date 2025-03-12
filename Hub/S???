@@ -182,7 +182,7 @@ while SetTeleportEnemie do
 wait(0.001)
 for _,v in pairs(Workspace:FindFirstChild("Folder_Enemies"):GetChildren()) do
 if v.ClassName == "Model" then
-v.HumanoidRootPart.Anchoree = true
+v.HumanoidRootPart.Anchored = true
 v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,-5)
 end
 end
