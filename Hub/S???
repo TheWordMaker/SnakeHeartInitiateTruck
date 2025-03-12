@@ -170,3 +170,16 @@ CheckQuest(v1)
 })
 end
 end
+
+local ToggleFarmQuest = TabAutoFarm:CreateToggle({
+   Name = "TeleportMob",
+   CrrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+for _,v in pairs(Workspace:FindFirstChild("Folder_Enemies"):GetChildren()) do
+if v.ClassName == "Model" then
+v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+end
+end
+   end,
+})
