@@ -3,7 +3,6 @@ getgenv().Get = setmetatable({}, {__index = function(Self, Idx) return game:GetS
 local Workspace = Get.Workspace
 local Players = Get.Players
 local Player = Players.LocalPlayer
-local PlayerCharacter = Player.Character
 local PlayerGui = Player.PlayerGui
 local Rep = Get.ReplicatedStorage
 local HttpService = Get.HttpService
@@ -309,7 +308,7 @@ local ToggleActivateAbility = TabMisc:CreateToggle({
         ActivateAbility = Value
         while ActivateAbility do
 			pcall(function()
-				if not PlayerCharacter:FindFirstChild("Head"):FindFirstChild("LeftGlow") then
+				if not Player.Character:FindFirstChild("Head"):FindFirstChild("LeftGlow") then
 					activateAbility()
 				end
 			end)
@@ -327,7 +326,7 @@ local ToggleActivateBlocking = TabMisc:CreateToggle({
         ActivateBlocking = Value
         while ActivateBlocking do
 			pcall(function()
-				if not Workspace:FindFirstChild(Player.Name):FindFirstChild("Blocking") then
+				if not Workspace:FindFirstChild(Player.Name):FindFirstChild("Blocking") and Workspace:FindFirstChild(Player.Name).Humanoid.Health >= 1 then
 					Rep.Block:FireServer(true)
 					repeat wait() until Workspace:FindFirstChild(Player.Name):FindFirstChild("Blocking")
 				end
@@ -623,12 +622,33 @@ local Toggle1AutoSelectQuest = TabAutoFarm:CreateToggle({
     end,
 })
 
+local ToggleButtonAutoValidQuest = false
+local Toggle1AutoValidQuest = TabAutoFarm:CreateToggle({
+    Name = "Auto Valid Quest",
+    CurrentValue = false,
+    Flag = "", 
+    Callback = function(Value)
+        ToggleButtonAutoValidQuest = Value
+        while ToggleButtonAutoValidQuest do
+            pcall(function()
+                if PlayerGui.MainClient.Quest.visible then
+					local questCount = PlayerGui.MainClient.Quest.Folder.Objective.progress.text:split("/")
+					if questCount[1] == questCount[2] then
+						quest("Completed")
+					end
+				end
+            end)
+			wait(0.1)
+        end
+    end,
+})
+
 local SectionSafeTeleport = TabAutoFarm:CreateSection("Zone Teleport")
 
 local ButtonTeleportSafeZone = TabAutoFarm:CreateButton({
     Name = "Safe Zone",
     Callback = function()
-		PlayerCharacter.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
+		Player.Character.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
     end,
 })
 
@@ -641,7 +661,7 @@ local Toggle1TeleportSafeZone = TabAutoFarm:CreateToggle({
         ToggleButtonSafeZone = Value
         while ToggleButtonSafeZone do
             pcall(function()
-				PlayerCharacter.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
+				Player.Character.HumanoidRootPart.CFrame = CFrame.new(-482, 0, -1715)
             end)
 			wait(0.1)
         end
@@ -695,7 +715,7 @@ local ToggleAutoOtherGodTeleport = TabAutoFarm:CreateToggle({
 					if MobCounter >= 5 then
 						for _,v in pairs(Workspace:GetChildren()) do
 							if v.Name == MobQuestOtherGod and v.Humanoid.Health ~= 0 then
-								v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
+								v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2)
 								v.HumanoidRootPart.Anchored = true
 							end
 						end
@@ -705,6 +725,19 @@ local ToggleAutoOtherGodTeleport = TabAutoFarm:CreateToggle({
             wait(0.1)
         end
     end,
+})
+
+local CooldownPoison = 3
+local SliderSelectCooldownPoison = TabAutoFarm:CreateSlider({
+	Name = "Select Cooldown Poison",
+	Range = {0, 3},
+	Increment = 0.1,
+	Suffix = "Potential",
+	CurrentValue = 3,
+	Flag = "",
+	Callback = function(CurrentValue)
+		CooldownPoison = CurrentValue
+   end,
 })
 
 local ToggleButtonAutoPoison = false
@@ -718,7 +751,7 @@ local Toggle1AutoPoison = TabAutoFarm:CreateToggle({
             pcall(function()
 				Rep.Remotes.SkillCast:FireServer("Poison Gas",{["fromClient"] = true,["Character"] = Workspace[Player.Name]})
             end)
-			wait(5)
+			wait(CooldownPoison)
         end
     end,
 })
@@ -735,7 +768,7 @@ local Toggle1AutoBossPoison = TabAutoFarm:CreateToggle({
 				for _,v in ipairs(Workspace:GetChildren()) do
 					if v:IsA("Model") and table.find(BossList,v.Name) then
 						if (v:GetModelCFrame().Position - BossPosition).Magnitude < 30 then
-							v.HumanoidRootPart.CFrame = PlayerCharacter.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + PlayerCharacter.HumanoidRootPart.CFrame.lookVector * 2
+							v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2) + Player.Character.HumanoidRootPart.CFrame.lookVector * 2
 							v.HumanoidRootPart.Anchored = true
 						end
 					end
@@ -869,7 +902,6 @@ RerollPath.ChildRemoved:Connect(function(child)
     end
 end)
 
-
 local ToggleAutoSpin = TabAutoSpin:CreateToggle({
     Name = "Auto Roll Power",
     CurrentValue = false,
@@ -883,12 +915,6 @@ local ToggleAutoSpin = TabAutoSpin:CreateToggle({
     end,
 })
 
-local ButtonTest = TabAutoSpin:CreateButton({
-    Name = "Test",
-    Callback = function()
-		firesignal(RerollPath.Rerolls.X.MouseButton1Click)
-    end,
-})
 ----------------------[ Tab Beta ]----------------------
 local TabBeta = Window:CreateTab("Beta", 4483362458)
 
@@ -902,7 +928,7 @@ local ToggleAutoGod = TabBeta:CreateToggle({
 		while aotogod do
 			repeat task.wait(0.1) until workspace:FindFirstChild("God")
 			local skillRemote = Rep:FindFirstChild("Remotes"):FindFirstChild("SkillCast")
-			local character = PlayerCharacter or Player.CharacterAdded:Wait()
+			local character = Player.Character or Player.CharacterAdded:Wait()
 			for _, obj in pairs(workspace:GetChildren()) do
 				if obj:IsA("Model") and obj:FindFirstChild("Humanoid") and obj ~= character and obj.Name == "God" then
 					skillRemote:FireServer("Raigo", {
@@ -978,26 +1004,6 @@ v.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.ne
             wait(0.1)
         end
     end,
-})
-local ButtonTrackPower = TabBeta:CreateButton({
-    Name = "Track Power",
-    Callback = function()
-        print("--------[ Tracker ]--------")
-        for i, v in pairs(Player:GetChildren()) do
-            if v:IsA("Folder") then
-                local found = false
-                for _, z in pairs(LookingPower) do
-                    if v.Name == z then
-                        found = true
-                        break
-                    end
-                end
-                if not found then
-                    print(v.Name)
-                end
-            end
-        end
-	end,
 })
 
 local SliderLevelItem2 = TabBeta:CreateSlider({
